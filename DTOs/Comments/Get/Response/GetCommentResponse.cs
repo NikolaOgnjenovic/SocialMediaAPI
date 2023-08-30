@@ -1,16 +1,12 @@
-using System.ComponentModel.DataAnnotations;
+using SocialConnectAPI.DTOs.Hateoas;
 
-namespace SocialConnectAPI.Models;
+namespace SocialConnectAPI.DTOs.Comments.Get.Response;
 
-/// <summary>
-/// Represents a comment made by an author.
-/// </summary>
-public class Comment
+public class GetCommentResponse : LinkCollection
 {
     /// <summary>
     /// Gets or sets the unique identifier of the comment.
     /// </summary>
-    [Key]
     public int Id { get; set; }
 
     /// <summary>

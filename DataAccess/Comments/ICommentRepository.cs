@@ -9,7 +9,6 @@ public interface ICommentRepository
     Comment CreateComment(Comment comment);
     Comment? UpdateComment(Comment comment);
     Comment? DeleteComment(int commentId);
-    // Comment? ArchiveComment(int commentId);
     Comment? LikeComment(int commentId);
     Comment? DislikeComment(int commentId);
 }

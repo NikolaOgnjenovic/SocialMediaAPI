@@ -40,6 +40,8 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
         .LogTo(Console.WriteLine, LogLevel.Information);
 });
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

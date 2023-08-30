@@ -1,16 +1,10 @@
-using System.ComponentModel.DataAnnotations;
+namespace SocialConnectAPI.DTOs.Comments.Put.Request;
 
-namespace SocialConnectAPI.Models;
-
-/// <summary>
-/// Represents a comment made by an author.
-/// </summary>
-public class Comment
+public class PutCommentRequest
 {
     /// <summary>
     /// Gets or sets the unique identifier of the comment.
     /// </summary>
-    [Key]
     public int Id { get; set; }
 
     /// <summary>

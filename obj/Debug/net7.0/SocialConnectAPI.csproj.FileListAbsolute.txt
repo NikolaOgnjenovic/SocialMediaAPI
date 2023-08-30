@@ -75,3 +75,5 @@
 /home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/obj/Debug/net7.0/SocialConnectAPI.genruntimeconfig.cache
 /home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/obj/Debug/net7.0/ref/SocialConnectAPI.dll
 /home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/bin/Debug/net7.0/SocialConnectAPI.xml
+/home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/bin/Debug/net7.0/AutoMapper.dll
+/home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/bin/Debug/net7.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll

@@ -9,11 +9,10 @@
             Represents a controller for managing comments in the API.
             </summary>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.CommentController.#ctor(SocialConnectAPI.DataAccess.Comments.ICommentRepository,SocialConnectAPI.Services.Comments.CommentService,Microsoft.AspNetCore.Routing.LinkGenerator)">
+        <member name="M:SocialConnectAPI.Controllers.CommentController.#ctor(SocialConnectAPI.Services.Comments.CommentService,Microsoft.AspNetCore.Routing.LinkGenerator)">
             <summary>
             Initializes a new instance of the <see cref="T:SocialConnectAPI.Controllers.CommentController"/> class.
             </summary>
-            <param name="commentRepository">The repository for comments.</param>
             <param name="commentService">The service for comment-related operations.</param>
             <param name="linkGenerator">The link generator for creating URIs.</param>
         </member>
@@ -31,18 +30,18 @@
             <param name="userId">The ID of the user whose comments to retrieve.</param>
             <returns>The list of comments associated with the user.</returns>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.CommentController.CreateComment(SocialConnectAPI.Models.Comment)">
+        <member name="M:SocialConnectAPI.Controllers.CommentController.CreateComment(SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest)">
             <summary>
             Creates a new comment.
             </summary>
-            <param name="comment">The comment to create.</param>
+            <param name="postCommentRequest">The comment to create.</param>
             <returns>The created comment.</returns>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.CommentController.UpdateComment(SocialConnectAPI.Models.Comment)">
+        <member name="M:SocialConnectAPI.Controllers.CommentController.UpdateComment(SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest)">
             <summary>
             Updates an existing comment.
             </summary>
-            <param name="comment">The comment with updated information.</param>
+            <param name="putCommentRequest">The comment with updated information.</param>
             <returns>The updated comment.</returns>
         </member>
         <member name="M:SocialConnectAPI.Controllers.CommentController.DeleteComment(System.Int32)">
@@ -72,6 +71,121 @@
             </summary>
             <returns>The allowed HTTP methods.</returns>
         </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Get.Response.GetCommentResponse.Id">
+            <summary>
+            Gets or sets the unique identifier of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Get.Response.GetCommentResponse.AuthorId">
+            <summary>
+            Gets or sets the ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Get.Response.GetCommentResponse.Content">
+            <summary>
+            Gets or sets the content of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Get.Response.GetCommentResponse.LikeCount">
+            <summary>
+            Gets or sets the number of likes the comment has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.Id">
+            <summary>
+            Gets or sets the unique identifier of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.AuthorId">
+            <summary>
+            Gets or sets the ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.Content">
+            <summary>
+            Gets or sets the content of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.LikeCount">
+            <summary>
+            Gets or sets the number of likes the comment has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest.AuthorId">
+            <summary>
+            Gets or sets the ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest.Content">
+            <summary>
+            Gets or sets the content of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest.LikeCount">
+            <summary>
+            Gets or sets the number of likes the comment has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.Id">
+            <summary>
+            Gets or sets the unique identifier of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.AuthorId">
+            <summary>
+            Gets or sets the ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.Content">
+            <summary>
+            Gets or sets the content of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.LikeCount">
+            <summary>
+            Gets or sets the number of likes the comment has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest.Id">
+            <summary>
+            Gets or sets the unique identifier of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest.AuthorId">
+            <summary>
+            Gets or sets the ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest.Content">
+            <summary>
+            Gets or sets the content of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest.LikeCount">
+            <summary>
+            Gets or sets the number of likes the comment has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.Id">
+            <summary>
+            Gets or sets the unique identifier of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.AuthorId">
+            <summary>
+            Gets or sets the ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.Content">
+            <summary>
+            Gets or sets the content of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.LikeCount">
+            <summary>
+            Gets or sets the number of likes the comment has received.
+            </summary>
+        </member>
         <member name="T:SocialConnectAPI.Migrations.InitialCreate">
             <inheritdoc />
         </member>
@@ -84,9 +198,89 @@
         <member name="M:SocialConnectAPI.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:SocialConnectAPI.Models.Comment">
+            <summary>
+            Represents a comment made by an author.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Comment.Id">
+            <summary>
+            Gets or sets the unique identifier of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Comment.AuthorId">
+            <summary>
+            Gets or sets the ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Comment.Content">
+            <summary>
+            Gets or sets the content of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Comment.LikeCount">
+            <summary>
+            Gets or sets the number of likes the comment has received.
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.Models.Post">
+            <summary>
+            Represents a post created by an author.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Post.Id">
+            <summary>
+            Gets or sets the unique identifier of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Post.AuthorId">
+            <summary>
+            Gets or sets the ID of the author who created the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Post.Content">
+            <summary>
+            Gets or sets the content of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Post.LikeCount">
+            <summary>
+            Gets or sets the number of likes the post has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Post.Status">
+            <summary>
+            Gets or sets the status of the post (e.g., Draft, Published, etc.).
+            </summary>
+        </member>
         <member name="T:SocialConnectAPI.Models.User">
             <summary>
             Represents a user with all attributes.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.User.Id">
+            <summary>
+            Gets or sets the unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.User.FirstName">
+            <summary>
+            Gets or sets the first name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.User.LastName">
+            <summary>
+            Gets or sets the last name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.User.Email">
+            <summary>
+            Gets or sets the email address of the user. This property is required.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.User.Password">
+            <summary>
+            Gets or sets the password of the user. This property is required and is not exposed in JSON responses.
             </summary>
         </member>
     </members>

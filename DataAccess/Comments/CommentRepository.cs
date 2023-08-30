@@ -55,19 +55,6 @@ public class CommentRepository : ICommentRepository
         return deletedComment.Entity;
     }
 
-    // public Comment? ArchiveComment(int commentId)
-    // {
-    //     var commentInDatabase = GetCommentById(commentId);
-    //     if (commentInDatabase == null)
-    //     {
-    //         return null;
-    //     }
-    //
-    //     commentInDatabase.Status = PostStatus.Archived;
-    //     _databaseContext.SaveChanges();
-    //     return commentInDatabase;
-    // }
-
     public Comment? LikeComment(int commentId)
     {
         var commentInDatabase = GetCommentById(commentId);
