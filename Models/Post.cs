@@ -29,7 +29,7 @@ public class Post
     public int LikeCount { get; set; }
     
     /// <summary>
-    /// The status of the post (e.g., Draft, Published, etc.).
+    /// The status of the post (Active / Archived).
     /// </summary>
     public PostStatus Status { get; set; }
     

@@ -7,7 +7,6 @@ using SocialConnectAPI.DTOs.Comments.Put.Request;
 using SocialConnectAPI.DTOs.Comments.Put.Response;
 using SocialConnectAPI.DTOs.Hateoas;
 using SocialConnectAPI.Exceptions;
-using SocialConnectAPI.Models;
 using SocialConnectAPI.Services.Comments;
 
 namespace SocialConnectAPI.Controllers;
@@ -41,7 +40,7 @@ public class CommentController : ControllerBase
     /// </summary>
     /// <param name="commentId">The ID of the comment to retrieve.</param>
     /// <returns>The retrieved comment.</returns>
-    [HttpGet("{commentId}")]
+    [HttpGet("{commentId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<GetCommentResponse> GetCommentById(int commentId)
@@ -63,7 +62,7 @@ public class CommentController : ControllerBase
     /// </summary>
     /// <param name="userId">The ID of the user whose comments to retrieve.</param>
     /// <returns>The list of comments associated with the user.</returns>
-    [HttpGet("users/{userId}")]
+    [HttpGet("users/{userId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<List<GetCommentResponse>> GetCommentsByUserId(int userId)
     {
@@ -118,7 +117,7 @@ public class CommentController : ControllerBase
     /// </summary>
     /// <param name="commentId">The ID of the comment to delete.</param>
     /// <returns>The result of the delete operation.</returns>
-    [HttpDelete("{commentId}")]
+    [HttpDelete("{commentId:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -144,7 +143,7 @@ public class CommentController : ControllerBase
     /// </summary>
     /// <param name="commentId">The ID of the comment to like.</param>
     /// <returns>The liked comment.</returns>
-    [HttpPatch("{commentId}/like")]
+    [HttpPatch("{commentId:int}/like")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<PatchCommentResponse> LikeComment(int commentId)
@@ -166,7 +165,7 @@ public class CommentController : ControllerBase
     /// </summary>
     /// <param name="commentId">The ID of the comment to dislike.</param>
     /// <returns>The disliked comment.</returns>
-    [HttpPatch("{commentId}/dislike")]
+    [HttpPatch("{commentId:int}/dislike")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<PatchCommentResponse> DislikeComment(int commentId)
@@ -200,7 +199,7 @@ public class CommentController : ControllerBase
         {
             new(
                 _linkGenerator.GetUriByAction(HttpContext, nameof(GetCommentById),
-                    values: new { commentId = commentId }), ControllerName, "GET"),
+                    values: new { commentId }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetCommentsByUserId), values: new { userId = 1 }),
                 ControllerName, "GET"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreateComment)), ControllerName, "POST"),
@@ -208,7 +207,7 @@ public class CommentController : ControllerBase
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(LikeComment)), ControllerName, "PATCH"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(DislikeComment)), ControllerName, "PATCH"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(DeleteComment),
-                    values: new { commentId = commentId }), ControllerName, "PATCH")
+                    values: new { commentId }), ControllerName, "DELETE")
         };
     }
 }

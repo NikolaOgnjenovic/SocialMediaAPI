@@ -1,12 +1,13 @@
 using System.Reflection;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SocialConnectAPI.DataAccess;
 using SocialConnectAPI.DataAccess.Comments;
 using SocialConnectAPI.DataAccess.Posts;
+using SocialConnectAPI.DataAccess.Users;
 using SocialConnectAPI.Services.Comments;
 using SocialConnectAPI.Services.Posts;
+using SocialConnectAPI.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,8 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<CommentService, CommentService>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<PostService, PostService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<UserService, UserService>();
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {

@@ -1,9 +1,9 @@
 using AutoMapper;
 using SocialConnectAPI.DataAccess.Posts;
 using SocialConnectAPI.DTOs.Posts.Get.Response;
-using SocialConnectAPI.DTOs.Posts.Patch;
-using SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest;
-using SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse;
+using SocialConnectAPI.DTOs.Posts.Patch.Response;
+using SocialConnectAPI.DTOs.Posts.Post.Request;
+using SocialConnectAPI.DTOs.Posts.Post.Response;
 using SocialConnectAPI.DTOs.Posts.Put.Request;
 using SocialConnectAPI.DTOs.Posts.Put.Response;
 using SocialConnectAPI.Exceptions;
@@ -50,7 +50,7 @@ public class PostService
 
         if (updatedPost == null)
         {
-            throw new PostNotFoundException("Post with id " + updatedPost.Id + " not found.");
+            throw new PostNotFoundException("Post with id " + putPostRequest.Id + " not found.");
         }
 
         return _mapper.Map<PutPostResponse>(updatedPost);

@@ -1,6 +1,4 @@
-using SocialConnectAPI.Models;
-
-namespace SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest;
+namespace SocialConnectAPI.DTOs.Posts.Post.Request;
 
 public class PostPostRequest
 {
@@ -18,11 +16,6 @@ public class PostPostRequest
     /// The number of likes the post has received.
     /// </summary>
     public int LikeCount { get; set; }
-
-    /// <summary>
-    /// The status of the post (e.g., Draft, Published, etc.).
-    /// </summary>
-    public PostStatus Status { get; set; }
 
     // TODO: Uncomment and implement the Tags property
     // /// <summary>

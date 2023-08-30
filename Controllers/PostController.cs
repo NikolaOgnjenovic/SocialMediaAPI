@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using SocialConnectAPI.DTOs.Hateoas;
 using SocialConnectAPI.DTOs.Posts.Get.Response;
-using SocialConnectAPI.DTOs.Posts.Patch;
-using SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest;
-using SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse;
+using SocialConnectAPI.DTOs.Posts.Patch.Response;
+using SocialConnectAPI.DTOs.Posts.Post.Request;
+using SocialConnectAPI.DTOs.Posts.Post.Response;
 using SocialConnectAPI.DTOs.Posts.Put.Request;
 using SocialConnectAPI.DTOs.Posts.Put.Response;
 using SocialConnectAPI.Exceptions;
@@ -40,7 +40,7 @@ public class PostController : ControllerBase
     /// </summary>
     /// <param name="postId">The ID of the post to retrieve.</param>
     /// <returns>The retrieved post.</returns>
-    [HttpGet("{postId}")]
+    [HttpGet("{postId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<GetPostResponse> GetPostById(int postId)
@@ -62,7 +62,7 @@ public class PostController : ControllerBase
     /// </summary>
     /// <param name="userId">The ID of the user whose posts to retrieve.</param>
     /// <returns>The list of posts associated with the user.</returns>
-    [HttpGet("users/{userId}")]
+    [HttpGet("users/{userId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<List<GetPostResponse>> GetPostsByUserId(int userId)
     {
@@ -117,7 +117,7 @@ public class PostController : ControllerBase
     /// </summary>
     /// <param name="postId">The ID of the post to delete.</param>
     /// <returns>The result of the delete operation.</returns>
-    [HttpDelete("{postId}")]
+    [HttpDelete("{postId:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -143,7 +143,7 @@ public class PostController : ControllerBase
     /// </summary>
     /// <param name="postId">The ID of the post to archive.</param>
     /// <returns>The archived post.</returns>
-    [HttpPatch("{postId}/archive")]
+    [HttpPatch("{postId:int}/archive")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<PatchPostResponse> ArchivePost(int postId)
@@ -165,7 +165,7 @@ public class PostController : ControllerBase
     /// </summary>
     /// <param name="postId">The ID of the post to like.</param>
     /// <returns>The liked post.</returns>
-    [HttpPatch("{postId}/like")]
+    [HttpPatch("{postId:int}/like")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<PatchPostResponse> LikePost(int postId)
@@ -187,7 +187,7 @@ public class PostController : ControllerBase
     /// </summary>
     /// <param name="postId">The ID of the post to dislike.</param>
     /// <returns>The disliked post.</returns>
-    [HttpPatch("{postId}/dislike")]
+    [HttpPatch("{postId:int}/dislike")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<PatchPostResponse> DislikePost(int postId)
@@ -221,7 +221,7 @@ public class PostController : ControllerBase
         {
             new(
                 _linkGenerator.GetUriByAction(HttpContext, nameof(GetPostById),
-                    values: new { postId = postId }), ControllerName, "GET"),
+                    values: new { postId }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetPostsByUserId), values: new { userId = 1 }),
                 ControllerName, "GET"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreatePost)), ControllerName, "POST"),
@@ -230,7 +230,7 @@ public class PostController : ControllerBase
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(ArchivePost)), ControllerName, "PATCH"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(DislikePost)), ControllerName, "PATCH"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(DeletePost),
-                    values: new { postId = postId }), ControllerName, "PATCH")
+                    values: new { postId }), ControllerName, "DELETE")
         };
     }
 }

@@ -1,5 +1,3 @@
-using SocialConnectAPI.DTOs.Hateoas;
-
 namespace SocialConnectAPI.DTOs.Comments.Post.Request;
 
 public class PostCommentRequest

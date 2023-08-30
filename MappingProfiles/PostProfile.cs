@@ -1,8 +1,8 @@
 using AutoMapper;
 using SocialConnectAPI.DTOs.Posts.Get.Response;
-using SocialConnectAPI.DTOs.Posts.Patch;
-using SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest;
-using SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse;
+using SocialConnectAPI.DTOs.Posts.Patch.Response;
+using SocialConnectAPI.DTOs.Posts.Post.Request;
+using SocialConnectAPI.DTOs.Posts.Post.Response;
 using SocialConnectAPI.DTOs.Posts.Put.Request;
 using SocialConnectAPI.DTOs.Posts.Put.Response;
 using SocialConnectAPI.Models;
@@ -18,7 +18,8 @@ public class PostProfile : Profile
         CreateMap<Post, PutPostResponse>();
         CreateMap<Post, PatchPostResponse>();
 
-        CreateMap<PostPostRequest, Post>();
+        // Mark post as active when posting without a status
+        CreateMap<PostPostRequest, Post>().ForMember(post => post.Status,  opt => opt.MapFrom(src => PostStatus.Active));
         CreateMap<PutPostRequest, Post>();
     }
 }

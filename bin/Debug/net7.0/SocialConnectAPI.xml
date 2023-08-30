@@ -97,7 +97,7 @@
             <param name="userId">The ID of the user whose posts to retrieve.</param>
             <returns>The list of posts associated with the user.</returns>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.PostController.CreatePost(SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.PostPostRequest)">
+        <member name="M:SocialConnectAPI.Controllers.PostController.CreatePost(SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest)">
             <summary>
             Creates a new post.
             </summary>
@@ -140,6 +140,74 @@
             <returns>The disliked post.</returns>
         </member>
         <member name="M:SocialConnectAPI.Controllers.PostController.GetOptions">
+            <summary>
+            Retrieves the allowed HTTP methods for the current endpoint.
+            </summary>
+            <returns>The allowed HTTP methods.</returns>
+        </member>
+        <member name="T:SocialConnectAPI.Controllers.UserController">
+            <summary>
+            Represents a controller for managing users in the API.
+            </summary>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.#ctor(SocialConnectAPI.Services.Users.UserService,Microsoft.AspNetCore.Routing.LinkGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SocialConnectAPI.Controllers.UserController"/> class.
+            </summary>
+            <param name="userService">The service for user-related operations.</param>
+            <param name="linkGenerator">The link generator for creating URIs.</param>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.GetUserById(System.Int32)">
+            <summary>
+            Retrieves a user by its ID.
+            </summary>
+            <param name="userId">The ID of the user to retrieve.</param>
+            <returns>The retrieved user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.GetUserByEmail(System.String)">
+            <summary>
+            Retrieves a user by its email.
+            </summary>
+            <param name="email">The email of the user to retrieve.</param>
+            <returns>The retrieved user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.GetUserByFirstAndLastName(System.String,System.String)">
+            <summary>
+            Retrieves a user by its first and last name.
+            </summary>
+            <param name="firstName">The first name of the user to retrieve.</param>
+            <param name="lastName">The first name of the user to retrieve.</param>
+            <returns>The retrieved user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.CreateUser(SocialConnectAPI.DTOs.Users.Post.Request.PostUserRequest)">
+            <summary>
+            Creates a new user.
+            </summary>
+            <param name="postUserRequest">The user to create.</param>
+            <returns>The created user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.UpdateUser(SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest)">
+            <summary>
+            Updates an existing user.
+            </summary>
+            <param name="putUserRequest">The user with updated information.</param>
+            <returns>The updated user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.DeleteUser(System.Int32)">
+            <summary>
+            Deletes a user by its ID.
+            </summary>
+            <param name="userId">The ID of the user to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.SetInactive(System.Int32)">
+            <summary>
+            Marks a user as inactive by its ID.
+            </summary>
+            <param name="userId">The ID of the user to archive.</param>
+            <returns>The updated user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.GetOptions">
             <summary>
             Retrieves the allowed HTTP methods for the current endpoint.
             </summary>
@@ -285,72 +353,67 @@
             The status of the post (e.g., Draft, Published, etc.).
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.PatchPostResponse.Id">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.Response.PatchPostResponse.Id">
             <summary>
             The unique identifier of the post.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.PatchPostResponse.AuthorId">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.Response.PatchPostResponse.AuthorId">
             <summary>
             The ID of the author who created the post.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.PatchPostResponse.Content">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.Response.PatchPostResponse.Content">
             <summary>
             The content of the post.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.PatchPostResponse.LikeCount">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.Response.PatchPostResponse.LikeCount">
             <summary>
             The number of likes the post has received.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.PatchPostResponse.Status">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.Response.PatchPostResponse.Status">
             <summary>
             The status of the post (e.g., Draft, Published, etc.).
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.PostPostRequest.AuthorId">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.AuthorId">
             <summary>
             The ID of the author who created the post.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.PostPostRequest.Content">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.Content">
             <summary>
             The content of the post.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.PostPostRequest.LikeCount">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.LikeCount">
             <summary>
             The number of likes the post has received.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.PostPostRequest.Status">
-            <summary>
-            The status of the post (e.g., Draft, Published, etc.).
-            </summary>
-        </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.PostPostResponse.Id">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.Id">
             <summary>
             The unique identifier of the post.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.PostPostResponse.AuthorId">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.AuthorId">
             <summary>
             The ID of the author who created the post.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.PostPostResponse.Content">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.Content">
             <summary>
             The content of the post.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.PostPostResponse.LikeCount">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.LikeCount">
             <summary>
             The number of likes the post has received.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.PostPostResponse.Status">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.Status">
             <summary>
             The status of the post (e.g., Draft, Published, etc.).
             </summary>
@@ -405,6 +468,151 @@
             The status of the post (e.g., Draft, Published, etc.).
             </summary>
         </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.Id">
+            <summary>
+            The unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.FirstName">
+            <summary>
+            The first name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.LastName">
+            <summary>
+            The last name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.Email">
+            <summary>
+            The email address of the user. This property is required.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.Status">
+            <summary>
+            The status of the user (Active / Inactive).
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.Id">
+            <summary>
+            The unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.FirstName">
+            <summary>
+            The first name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.LastName">
+            <summary>
+            The last name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.Email">
+            <summary>
+            The email address of the user. This property is required.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.Status">
+            <summary>
+            The status of the user (Active / Inactive).
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Request.PostUserRequest.FirstName">
+            <summary>
+            The first name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Request.PostUserRequest.LastName">
+            <summary>
+            The last name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Request.PostUserRequest.Email">
+            <summary>
+            The email address of the user. This property is required.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Request.PostUserRequest.Password">
+            <summary>
+            The password of the user. This property is required and is not exposed in JSON responses.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.Id">
+            <summary>
+            The unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.FirstName">
+            <summary>
+            The first name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.LastName">
+            <summary>
+            The last name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.Email">
+            <summary>
+            The email address of the user. This property is required.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.Status">
+            <summary>
+            The status of the user (Active / Inactive).
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.Id">
+            <summary>
+            The unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.FirstName">
+            <summary>
+            The first name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.LastName">
+            <summary>
+            The last name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.Email">
+            <summary>
+            The email address of the user. This property is required.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.Status">
+            <summary>
+            The status of the user (Active / Inactive).
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.Id">
+            <summary>
+            The unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.FirstName">
+            <summary>
+            The first name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.LastName">
+            <summary>
+            The last name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.Email">
+            <summary>
+            The email address of the user. This property is required.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.Status">
+            <summary>
+            The status of the user (Active / Inactive).
+            </summary>
+        </member>
         <member name="T:SocialConnectAPI.Migrations.InitialCreate">
             <inheritdoc />
         </member>
@@ -415,6 +623,18 @@
             <inheritdoc />
         </member>
         <member name="M:SocialConnectAPI.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:SocialConnectAPI.Migrations.UpdatedUsers">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.UpdatedUsers.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.UpdatedUsers.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.UpdatedUsers.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:SocialConnectAPI.Models.Comment">
@@ -469,7 +689,7 @@
         </member>
         <member name="P:SocialConnectAPI.Models.Post.Status">
             <summary>
-            The status of the post (e.g., Draft, Published, etc.).
+            The status of the post (Active / Archived).
             </summary>
         </member>
         <member name="T:SocialConnectAPI.Models.User">
@@ -500,6 +720,11 @@
         <member name="P:SocialConnectAPI.Models.User.Password">
             <summary>
             The password of the user. This property is required and is not exposed in JSON responses.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.User.Status">
+            <summary>
+            The status of the user (Active / Inactive).
             </summary>
         </member>
     </members>

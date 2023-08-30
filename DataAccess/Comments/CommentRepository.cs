@@ -1,11 +1,10 @@
-using SocialConnectAPI.Exceptions;
 using SocialConnectAPI.Models;
 
 namespace SocialConnectAPI.DataAccess.Comments;
 
 public class CommentRepository : ICommentRepository
 {
-    DatabaseContext _databaseContext;
+    private readonly DatabaseContext _databaseContext;
 
     public CommentRepository(DatabaseContext databaseContext)
     {

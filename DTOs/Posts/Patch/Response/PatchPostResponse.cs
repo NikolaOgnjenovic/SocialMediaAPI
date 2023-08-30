@@ -1,7 +1,7 @@
 using SocialConnectAPI.DTOs.Hateoas;
 using SocialConnectAPI.Models;
 
-namespace SocialConnectAPI.DTOs.Posts.Patch;
+namespace SocialConnectAPI.DTOs.Posts.Patch.Response;
 
 public class PatchPostResponse : LinkCollection
 {

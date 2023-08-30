@@ -4,7 +4,7 @@ namespace SocialConnectAPI.DataAccess.Posts;
 
 public class PostRepository : IPostRepository
 {
-    DatabaseContext _databaseContext;
+    private readonly DatabaseContext _databaseContext;
 
     public PostRepository(DatabaseContext databaseContext)
     {

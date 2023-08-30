@@ -50,7 +50,7 @@ public class CommentService
 
         if (updatedComment == null)
         {
-            throw new CommentNotFoundException("Comment with id " + updatedComment.Id + " not found.");
+            throw new CommentNotFoundException("Comment with id " + putCommentRequest.Id + " not found.");
         }
 
         return _mapper.Map<PutCommentResponse>(updatedComment);
