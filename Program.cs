@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SocialConnectAPI.DataAccess;
 using SocialConnectAPI.DataAccess.Comments;
+using SocialConnectAPI.DataAccess.Posts;
 using SocialConnectAPI.Services.Comments;
+using SocialConnectAPI.Services.Posts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,8 @@ builder.Services.AddSwaggerGen(c => {
 
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<CommentService, CommentService>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<PostService, PostService>();
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {

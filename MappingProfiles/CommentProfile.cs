@@ -9,7 +9,7 @@ using SocialConnectAPI.Models;
 
 namespace SocialConnectAPI.MappingProfiles;
 
-public class CommentProfile: Profile
+public class CommentProfile : Profile
 {
     public CommentProfile()
     {

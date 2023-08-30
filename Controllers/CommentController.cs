@@ -4,6 +4,7 @@ using SocialConnectAPI.DTOs.Comments.Patch.Response;
 using SocialConnectAPI.DTOs.Comments.Post.Request;
 using SocialConnectAPI.DTOs.Comments.Post.Response;
 using SocialConnectAPI.DTOs.Comments.Put.Request;
+using SocialConnectAPI.DTOs.Comments.Put.Response;
 using SocialConnectAPI.DTOs.Hateoas;
 using SocialConnectAPI.Exceptions;
 using SocialConnectAPI.Models;
@@ -62,7 +63,7 @@ public class CommentController : ControllerBase
     /// </summary>
     /// <param name="userId">The ID of the user whose comments to retrieve.</param>
     /// <returns>The list of comments associated with the user.</returns>
-    [HttpGet("/users/{userId}")]
+    [HttpGet("users/{userId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<List<GetCommentResponse>> GetCommentsByUserId(int userId)
     {
@@ -98,7 +99,7 @@ public class CommentController : ControllerBase
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<Comment> UpdateComment(PutCommentRequest putCommentRequest)
+    public ActionResult<PutCommentResponse> UpdateComment(PutCommentRequest putCommentRequest)
     {
         try
         {

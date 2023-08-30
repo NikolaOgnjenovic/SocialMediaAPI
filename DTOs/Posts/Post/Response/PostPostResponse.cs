@@ -1,16 +1,13 @@
-using System.ComponentModel.DataAnnotations;
+using SocialConnectAPI.DTOs.Hateoas;
+using SocialConnectAPI.Models;
 
-namespace SocialConnectAPI.Models;
+namespace SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse;
 
-/// <summary>
-/// Represents a post created by an author.
-/// </summary>
-public class Post
+public class PostPostResponse : LinkCollection
 {
     /// <summary>
     /// The unique identifier of the post.
     /// </summary>
-    [Key]
     public int Id { get; set; }
 
     /// <summary>

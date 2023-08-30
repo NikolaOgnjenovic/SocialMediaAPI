@@ -71,119 +71,338 @@
             </summary>
             <returns>The allowed HTTP methods.</returns>
         </member>
+        <member name="T:SocialConnectAPI.Controllers.PostController">
+            <summary>
+            Represents a controller for managing posts in the API.
+            </summary>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.#ctor(SocialConnectAPI.Services.Posts.PostService,Microsoft.AspNetCore.Routing.LinkGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SocialConnectAPI.Controllers.PostController"/> class.
+            </summary>
+            <param name="postService">The service for post-related operations.</param>
+            <param name="linkGenerator">The link generator for creating URIs.</param>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.GetPostById(System.Int32)">
+            <summary>
+            Retrieves a post by its ID.
+            </summary>
+            <param name="postId">The ID of the post to retrieve.</param>
+            <returns>The retrieved post.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.GetPostsByUserId(System.Int32)">
+            <summary>
+            Retrieves posts associated with a user by their user ID.
+            </summary>
+            <param name="userId">The ID of the user whose posts to retrieve.</param>
+            <returns>The list of posts associated with the user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.CreatePost(SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.PostPostRequest)">
+            <summary>
+            Creates a new post.
+            </summary>
+            <param name="postPostRequest">The post to create.</param>
+            <returns>The created post.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.UpdatePost(SocialConnectAPI.DTOs.Posts.Put.Request.PutPostRequest)">
+            <summary>
+            Updates an existing post.
+            </summary>
+            <param name="putPostRequest">The post with updated information.</param>
+            <returns>The updated post.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.DeletePost(System.Int32)">
+            <summary>
+            Deletes a post by its ID.
+            </summary>
+            <param name="postId">The ID of the post to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.ArchivePost(System.Int32)">
+            <summary>
+            Archives a post by its ID.
+            </summary>
+            <param name="postId">The ID of the post to archive.</param>
+            <returns>The archived post.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.LikePost(System.Int32)">
+            <summary>
+            Likes a post by its ID.
+            </summary>
+            <param name="postId">The ID of the post to like.</param>
+            <returns>The liked post.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.DislikePost(System.Int32)">
+            <summary>
+            Dislikes a post by its ID.
+            </summary>
+            <param name="postId">The ID of the post to dislike.</param>
+            <returns>The disliked post.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.GetOptions">
+            <summary>
+            Retrieves the allowed HTTP methods for the current endpoint.
+            </summary>
+            <returns>The allowed HTTP methods.</returns>
+        </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Get.Response.GetCommentResponse.Id">
             <summary>
-            Gets or sets the unique identifier of the comment.
+            The unique identifier of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Get.Response.GetCommentResponse.AuthorId">
             <summary>
-            Gets or sets the ID of the author who wrote the comment.
+            The ID of the author who wrote the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Get.Response.GetCommentResponse.Content">
             <summary>
-            Gets or sets the content of the comment.
+            The content of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Get.Response.GetCommentResponse.LikeCount">
             <summary>
-            Gets or sets the number of likes the comment has received.
+            The number of likes the comment has received.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.Id">
             <summary>
-            Gets or sets the unique identifier of the comment.
+            The unique identifier of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.AuthorId">
             <summary>
-            Gets or sets the ID of the author who wrote the comment.
+            The ID of the author who wrote the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.Content">
             <summary>
-            Gets or sets the content of the comment.
+            The content of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.LikeCount">
             <summary>
-            Gets or sets the number of likes the comment has received.
+            The number of likes the comment has received.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest.AuthorId">
             <summary>
-            Gets or sets the ID of the author who wrote the comment.
+            The ID of the author who wrote the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest.Content">
             <summary>
-            Gets or sets the content of the comment.
+            The content of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest.LikeCount">
             <summary>
-            Gets or sets the number of likes the comment has received.
+            The number of likes the comment has received.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.Id">
             <summary>
-            Gets or sets the unique identifier of the comment.
+            The unique identifier of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.AuthorId">
             <summary>
-            Gets or sets the ID of the author who wrote the comment.
+            The ID of the author who wrote the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.Content">
             <summary>
-            Gets or sets the content of the comment.
+            The content of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.LikeCount">
             <summary>
-            Gets or sets the number of likes the comment has received.
+            The number of likes the comment has received.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest.Id">
             <summary>
-            Gets or sets the unique identifier of the comment.
+            The unique identifier of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest.AuthorId">
             <summary>
-            Gets or sets the ID of the author who wrote the comment.
+            The ID of the author who wrote the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest.Content">
             <summary>
-            Gets or sets the content of the comment.
+            The content of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest.LikeCount">
             <summary>
-            Gets or sets the number of likes the comment has received.
+            The number of likes the comment has received.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.Id">
             <summary>
-            Gets or sets the unique identifier of the comment.
+            The unique identifier of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.AuthorId">
             <summary>
-            Gets or sets the ID of the author who wrote the comment.
+            The ID of the author who wrote the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.Content">
             <summary>
-            Gets or sets the content of the comment.
+            The content of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.LikeCount">
             <summary>
-            Gets or sets the number of likes the comment has received.
+            The number of likes the comment has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Get.Response.GetPostResponse.Id">
+            <summary>
+            The unique identifier of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Get.Response.GetPostResponse.AuthorId">
+            <summary>
+            The ID of the author who created the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Get.Response.GetPostResponse.Content">
+            <summary>
+            The content of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Get.Response.GetPostResponse.LikeCount">
+            <summary>
+            The number of likes the post has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Get.Response.GetPostResponse.Status">
+            <summary>
+            The status of the post (e.g., Draft, Published, etc.).
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.PatchPostResponse.Id">
+            <summary>
+            The unique identifier of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.PatchPostResponse.AuthorId">
+            <summary>
+            The ID of the author who created the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.PatchPostResponse.Content">
+            <summary>
+            The content of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.PatchPostResponse.LikeCount">
+            <summary>
+            The number of likes the post has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.PatchPostResponse.Status">
+            <summary>
+            The status of the post (e.g., Draft, Published, etc.).
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.PostPostRequest.AuthorId">
+            <summary>
+            The ID of the author who created the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.PostPostRequest.Content">
+            <summary>
+            The content of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.PostPostRequest.LikeCount">
+            <summary>
+            The number of likes the post has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.PostPostRequest.Status">
+            <summary>
+            The status of the post (e.g., Draft, Published, etc.).
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.PostPostResponse.Id">
+            <summary>
+            The unique identifier of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.PostPostResponse.AuthorId">
+            <summary>
+            The ID of the author who created the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.PostPostResponse.Content">
+            <summary>
+            The content of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.PostPostResponse.LikeCount">
+            <summary>
+            The number of likes the post has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.PostPostResponse.Status">
+            <summary>
+            The status of the post (e.g., Draft, Published, etc.).
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Request.PutPostRequest.Id">
+            <summary>
+            The unique identifier of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Request.PutPostRequest.AuthorId">
+            <summary>
+            The ID of the author who created the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Request.PutPostRequest.Content">
+            <summary>
+            The content of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Request.PutPostRequest.LikeCount">
+            <summary>
+            The number of likes the post has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Request.PutPostRequest.Status">
+            <summary>
+            The status of the post (e.g., Draft, Published, etc.).
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Response.PutPostResponse.Id">
+            <summary>
+            The unique identifier of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Response.PutPostResponse.AuthorId">
+            <summary>
+            The ID of the author who created the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Response.PutPostResponse.Content">
+            <summary>
+            The content of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Response.PutPostResponse.LikeCount">
+            <summary>
+            The number of likes the post has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Response.PutPostResponse.Status">
+            <summary>
+            The status of the post (e.g., Draft, Published, etc.).
             </summary>
         </member>
         <member name="T:SocialConnectAPI.Migrations.InitialCreate">
@@ -205,22 +424,22 @@
         </member>
         <member name="P:SocialConnectAPI.Models.Comment.Id">
             <summary>
-            Gets or sets the unique identifier of the comment.
+            The unique identifier of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.Comment.AuthorId">
             <summary>
-            Gets or sets the ID of the author who wrote the comment.
+            The ID of the author who wrote the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.Comment.Content">
             <summary>
-            Gets or sets the content of the comment.
+            The content of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.Comment.LikeCount">
             <summary>
-            Gets or sets the number of likes the comment has received.
+            The number of likes the comment has received.
             </summary>
         </member>
         <member name="T:SocialConnectAPI.Models.Post">
@@ -230,27 +449,27 @@
         </member>
         <member name="P:SocialConnectAPI.Models.Post.Id">
             <summary>
-            Gets or sets the unique identifier of the post.
+            The unique identifier of the post.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.Post.AuthorId">
             <summary>
-            Gets or sets the ID of the author who created the post.
+            The ID of the author who created the post.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.Post.Content">
             <summary>
-            Gets or sets the content of the post.
+            The content of the post.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.Post.LikeCount">
             <summary>
-            Gets or sets the number of likes the post has received.
+            The number of likes the post has received.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.Post.Status">
             <summary>
-            Gets or sets the status of the post (e.g., Draft, Published, etc.).
+            The status of the post (e.g., Draft, Published, etc.).
             </summary>
         </member>
         <member name="T:SocialConnectAPI.Models.User">
@@ -260,27 +479,27 @@
         </member>
         <member name="P:SocialConnectAPI.Models.User.Id">
             <summary>
-            Gets or sets the unique identifier of the user.
+            The unique identifier of the user.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.User.FirstName">
             <summary>
-            Gets or sets the first name of the user.
+            The first name of the user.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.User.LastName">
             <summary>
-            Gets or sets the last name of the user.
+            The last name of the user.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.User.Email">
             <summary>
-            Gets or sets the email address of the user. This property is required.
+            The email address of the user. This property is required.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.User.Password">
             <summary>
-            Gets or sets the password of the user. This property is required and is not exposed in JSON responses.
+            The password of the user. This property is required and is not exposed in JSON responses.
             </summary>
         </member>
     </members>

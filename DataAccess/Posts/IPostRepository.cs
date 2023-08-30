@@ -9,9 +9,9 @@ public interface IPostRepository
     List<Post>? GetPostsByTag(string tag);
     Post CreatePost(Post post);
     Post? UpdatePost(Post post);
-    void DeletePost(int postId);
+    Post? DeletePost(int postId);
     Post? ArchivePost(int postId);
-    Post? LikePost(int postId, int userId);
-    
-    bool SaveChanges();
+    // TODO: Add userId and call user service
+    Post? LikePost(int postId);
+    Post? DislikePost(int postId);
 }
