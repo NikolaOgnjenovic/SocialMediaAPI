@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SocialConnectAPI</name>
+    </assembly>
+    <members>
+        <member name="T:SocialConnectAPI.Controllers.CommentController">
+            <summary>
+            Represents a controller for managing comments in the API.
+            </summary>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.#ctor(SocialConnectAPI.DataAccess.Comments.ICommentRepository,SocialConnectAPI.Services.Comments.CommentService,Microsoft.AspNetCore.Routing.LinkGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SocialConnectAPI.Controllers.CommentController"/> class.
+            </summary>
+            <param name="commentRepository">The repository for comments.</param>
+            <param name="commentService">The service for comment-related operations.</param>
+            <param name="linkGenerator">The link generator for creating URIs.</param>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.GetCommentById(System.Int32)">
+            <summary>
+            Retrieves a comment by its ID.
+            </summary>
+            <param name="commentId">The ID of the comment to retrieve.</param>
+            <returns>The retrieved comment.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.GetCommentsByUserId(System.Int32)">
+            <summary>
+            Retrieves comments associated with a user by their user ID.
+            </summary>
+            <param name="userId">The ID of the user whose comments to retrieve.</param>
+            <returns>The list of comments associated with the user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.CreateComment(SocialConnectAPI.Models.Comment)">
+            <summary>
+            Creates a new comment.
+            </summary>
+            <param name="comment">The comment to create.</param>
+            <returns>The created comment.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.UpdateComment(SocialConnectAPI.Models.Comment)">
+            <summary>
+            Updates an existing comment.
+            </summary>
+            <param name="comment">The comment with updated information.</param>
+            <returns>The updated comment.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.DeleteComment(System.Int32)">
+            <summary>
+            Deletes a comment by its ID.
+            </summary>
+            <param name="commentId">The ID of the comment to delete.</param>
+            <returns>The result of the delete operation.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.LikeComment(System.Int32)">
+            <summary>
+            Likes a comment by its ID.
+            </summary>
+            <param name="commentId">The ID of the comment to like.</param>
+            <returns>The liked comment.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.DislikeComment(System.Int32)">
+            <summary>
+            Dislikes a comment by its ID.
+            </summary>
+            <param name="commentId">The ID of the comment to dislike.</param>
+            <returns>The disliked comment.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.GetOptions">
+            <summary>
+            Retrieves the allowed HTTP methods for the current endpoint.
+            </summary>
+            <returns>The allowed HTTP methods.</returns>
+        </member>
+        <member name="T:SocialConnectAPI.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:SocialConnectAPI.Models.User">
+            <summary>
+            Represents a user with all attributes.
+            </summary>
+        </member>
+    </members>
+</doc>
