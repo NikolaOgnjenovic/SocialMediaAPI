@@ -22,5 +22,8 @@ public class CommentProfile : Profile
         CreateMap<PostCommentRequest, Comment>().ForMember(comment => comment.UsersWhoLiked,  opt => opt.MapFrom(src => new List<CommentLike>()));
         CreateMap<PostCommentRequest, Comment>().ForMember(comment => comment.LikeCount,  opt => opt.MapFrom(src => 0));
         CreateMap<PutCommentRequest, Comment>();
+        CreateMap<Comment, SimpleComment>();
+        CreateMap<CommentLike, SimpleCommentLike>();
+        CreateMap<SimpleCommentLike, CommentLike>();
     }
 }

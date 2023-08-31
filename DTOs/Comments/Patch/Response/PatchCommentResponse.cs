@@ -1,4 +1,5 @@
 using SocialConnectAPI.DTOs.Hateoas;
+using SocialConnectAPI.Models;
 
 namespace SocialConnectAPI.DTOs.Comments.Patch.Response;
 
@@ -26,4 +27,8 @@ public class PatchCommentResponse : LinkCollection
     /// Gets or sets the number of likes the comment has received.
     /// </summary>
     public int LikeCount { get; set; }
+    
+    public List<SimpleCommentLike> UsersWhoLiked { get; set; }
+    
+    public CommentStatus Status { get; set; }
 }

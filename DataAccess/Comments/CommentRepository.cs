@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SocialConnectAPI.Models;
 
 namespace SocialConnectAPI.DataAccess.Comments;
@@ -13,12 +14,16 @@ public class CommentRepository : ICommentRepository
     
     public Comment? GetCommentById(int commentId)
     {
-        return _databaseContext.Comments.FirstOrDefault(comment => comment.Id == commentId);
+        return _databaseContext.Comments
+            .Include(comment => comment.UsersWhoLiked)
+            .FirstOrDefault(comment => comment.Id == commentId);
     }
     
     public Comment? GetActiveCommentById(int commentId)
     {
-        return _databaseContext.Comments.FirstOrDefault(comment => comment.Id == commentId && comment.Status == CommentStatus.Active);
+        return _databaseContext.Comments
+            .Include(comment => comment.UsersWhoLiked)
+            .FirstOrDefault(comment => comment.Id == commentId && comment.Status == CommentStatus.Active);
     }
 
     public List<Comment> GetCommentsByUserId(int userId)

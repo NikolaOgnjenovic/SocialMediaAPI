@@ -1,10 +1,11 @@
-using SocialConnectAPI.DTOs.Hateoas;
-using SocialConnectAPI.DTOs.Users.Get.Response;
 using SocialConnectAPI.Models;
 
-namespace SocialConnectAPI.DTOs.Users.Patch.Response;
+namespace SocialConnectAPI.DTOs.Users.Get.Response;
 
-public class PatchUserResponse : LinkCollection
+/// <summary>
+/// Contains no complex objects. Used to prevent cycles.
+/// </summary>
+public class SimpleUser
 {
     /// <summary>
     /// The unique identifier of the user.
@@ -15,7 +16,7 @@ public class PatchUserResponse : LinkCollection
     /// The first name of the user.
     /// </summary>
     public string? FirstName { get; set; }
-    
+
     /// <summary>
     /// The last name of the user.
     /// </summary>
@@ -26,15 +27,6 @@ public class PatchUserResponse : LinkCollection
     /// </summary>
     public string Email { get; set; }
 
-    public List<PostLike> PostLikes { get; set; }
-    /// <summary>
-    /// The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
-    /// </summary>
-    public List<CommentLike> CommentLikes { get; set; }
-    
-    public List<SimpleUser> Followers { get; set; }
-    public List<SimpleUser> Following { get; set; }
-    
     /// <summary>
     /// The status of the user (Active / Inactive).
     /// </summary>

@@ -19,12 +19,13 @@ public class UserProfile : Profile
         CreateMap<User, PatchUserResponse>();
 
         // Mark user as active & initialise followers, post & comment likes when mapping from a post request to a user
-        CreateMap<PostUserRequest, User>().ForMember(user => user.Status,  opt => opt.MapFrom(src => UserStatus.Active));
-        CreateMap<PostUserRequest, User>().ForMember(user => user.Followers,  opt => opt.MapFrom(src => new List<User>()));
-        CreateMap<PostUserRequest, User>().ForMember(user => user.Following,  opt => opt.MapFrom(src => new List<User>()));
-        CreateMap<PostUserRequest, User>().ForMember(user => user.PostLikes,  opt => opt.MapFrom(src => new List<PostLike>()));
-        CreateMap<PostUserRequest, User>().ForMember(user => user.CommentLikes,  opt => opt.MapFrom(src => new List<CommentLike>()));
+        CreateMap<PostUserRequest, User>().ForMember(user => user.Status,  opt => opt.MapFrom(src => UserStatus.Active))
+        .ForMember(user => user.Followers,  opt => opt.MapFrom(src => new List<User>()))
+        .ForMember(user => user.Following,  opt => opt.MapFrom(src => new List<User>()))
+        .ForMember(user => user.PostLikes,  opt => opt.MapFrom(src => new List<PostLike>()))
+        .ForMember(user => user.CommentLikes,  opt => opt.MapFrom(src => new List<CommentLike>()));
 
         CreateMap<PutUserRequest, User>();
+        CreateMap<User, SimpleUser>();
     }
 }

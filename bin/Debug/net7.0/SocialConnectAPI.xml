@@ -58,7 +58,7 @@
             <param name="putCommentRequest">The comment with updated information.</param>
             <returns>The updated comment.</returns>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.CommentController.DeleteComment(System.Int32)">
+        <member name="M:SocialConnectAPI.Controllers.CommentController.DeleteComment(System.Int32,SocialConnectAPI.DTOs.Comments.Delete.Request.DeleteCommentRequest)">
             <summary>
             Deletes a comment by its ID.
             </summary>
@@ -293,6 +293,16 @@
             </summary>
             <returns>The allowed HTTP methods.</returns>
         </member>
+        <member name="T:SocialConnectAPI.DTOs.Comments.Delete.Request.DeleteCommentRequest">
+            <summary>
+            Represents a request to delete a comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Delete.Request.DeleteCommentRequest.UserId">
+            <summary>
+            The user ID of the user performing the action.
+            </summary>
+        </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Get.Response.GetCommentResponse.Id">
             <summary>
             The unique identifier of the comment.
@@ -358,6 +368,11 @@
             The content of the comment.
             </summary>
         </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest.PostId">
+            <summary>
+            The ID of the post that the comment is on.
+            </summary>
+        </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.Id">
             <summary>
             The unique identifier of the comment.
@@ -366,6 +381,11 @@
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.AuthorId">
             <summary>
             The ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.PostId">
+            <summary>
+            The ID of the post that the comment is on.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.Content">
@@ -388,6 +408,11 @@
             The ID of the author who wrote the comment.
             </summary>
         </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest.PostId">
+            <summary>
+            The ID of the post that the comment is on.
+            </summary>
+        </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Request.PutCommentRequest.Content">
             <summary>
             The content of the comment.
@@ -406,6 +431,11 @@
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.AuthorId">
             <summary>
             The ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.PostId">
+            <summary>
+            The ID of the post that the comment is on.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Put.Response.PutCommentResponse.Content">
@@ -496,16 +526,6 @@
         <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.Content">
             <summary>
             The content of the post.
-            </summary>
-        </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.LikeCount">
-            <summary>
-            The number of likes the post has received.
-            </summary>
-        </member>
-        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.Tags">
-            <summary>
-            The list of tags associated with the post.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.Id">
@@ -618,17 +638,42 @@
             The email address of the user. This property is required.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.PostLikes">
-            <summary>
-            The list of PostLike objects that contain the relationship between a liked post's id and the user's id.
-            </summary>
-        </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.CommentLikes">
             <summary>
             The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.Status">
+            <summary>
+            The status of the user (Active / Inactive).
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.DTOs.Users.Get.Response.SimpleUser">
+            <summary>
+            Contains no complex objects. Used to prevent cycles.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.SimpleUser.Id">
+            <summary>
+            The unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.SimpleUser.FirstName">
+            <summary>
+            The first name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.SimpleUser.LastName">
+            <summary>
+            The last name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.SimpleUser.Email">
+            <summary>
+            The email address of the user. This property is required.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.SimpleUser.Status">
             <summary>
             The status of the user (Active / Inactive).
             </summary>
@@ -663,9 +708,9 @@
             The last name of the user.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.PostLikes">
+        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.Email">
             <summary>
-            The list of PostLike objects that contain the relationship between a liked post's id and the user's id.
+            The email address of the user. This property is required.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.CommentLikes">
@@ -713,11 +758,6 @@
             The last name of the user.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.PostLikes">
-            <summary>
-            The list of PostLike objects that contain the relationship between a liked post's id and the user's id.
-            </summary>
-        </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.CommentLikes">
             <summary>
             The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
@@ -748,21 +788,6 @@
             The email address of the user. This property is required.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.PostLikes">
-            <summary>
-            The list of PostLike objects that contain the relationship between a liked post's id and the user's id.
-            </summary>
-        </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.CommentLikes">
-            <summary>
-            The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
-            </summary>
-        </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.Status">
-            <summary>
-            The status of the user (Active / Inactive).
-            </summary>
-        </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.Id">
             <summary>
             The unique identifier of the user.
@@ -783,11 +808,6 @@
             The email address of the user. This property is required.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.PostLikes">
-            <summary>
-            The list of PostLike objects that contain the relationship between a liked post's id and the user's id.
-            </summary>
-        </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.CommentLikes">
             <summary>
             The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
@@ -806,6 +826,17 @@
         <member name="M:SocialConnectAPI.Exceptions.CommentLikedException.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:SocialConnectAPI.Exceptions.CommentLikedException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+        </member>
+        <member name="T:SocialConnectAPI.Exceptions.CommentNotDeletedException">
+            <summary>
+            Represents an exception that is thrown when a comment doesn't get deleted because of the user permissions.
+            </summary>
+        </member>
+        <member name="M:SocialConnectAPI.Exceptions.CommentNotDeletedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SocialConnectAPI.Exceptions.CommentNotDeletedException"/> class with a specified error message.
             </summary>
             <param name="message">The error message that explains the reason for the exception.</param>
         </member>
@@ -912,6 +943,18 @@
         <member name="M:SocialConnectAPI.Migrations.ListCleanup.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:SocialConnectAPI.Migrations.Cleanup">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.Cleanup.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.Cleanup.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.Cleanup.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:SocialConnectAPI.Models.Comment">
             <summary>
             Represents a comment made by an author.
@@ -943,6 +986,41 @@
             </summary>
         </member>
         <member name="T:SocialConnectAPI.Models.CommentLike">
+            <summary>
+            Represents the relationship between a liked comment and a user.
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.Models.SimpleComment">
+            <summary>
+            Represents a comment made by an author.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimpleComment.Id">
+            <summary>
+            The unique identifier of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimpleComment.AuthorId">
+            <summary>
+            The ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimpleComment.PostId">
+            <summary>
+            The ID of the post that the comment is on.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimpleComment.Content">
+            <summary>
+            The content of the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimpleComment.LikeCount">
+            <summary>
+            The number of likes the comment has received.
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.Models.SimpleCommentLike">
             <summary>
             Represents the relationship between a liked comment and a user.
             </summary>
@@ -993,6 +1071,56 @@
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.PostLike.UserId">
+            <summary>
+            The unique identifier of the user that liked the post.
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.Models.SimplePost">
+            <summary>
+            Represents a post created by an author.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimplePost.Id">
+            <summary>
+            The unique identifier of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimplePost.AuthorId">
+            <summary>
+            The ID of the author who created the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimplePost.Content">
+            <summary>
+            The content of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimplePost.LikeCount">
+            <summary>
+            The number of likes the post has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimplePost.Status">
+            <summary>
+            The status of the post (Active / Archived).
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimplePost.Tags">
+            <summary>
+            The list of tags associated with the post.
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.Models.SimplePostLike">
+            <summary>
+            Represents the relationship between a liked post and a user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimplePostLike.PostId">
+            <summary>
+            The unique identifier of the post that the user liked.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.SimplePostLike.UserId">
             <summary>
             The unique identifier of the user that liked the post.
             </summary>

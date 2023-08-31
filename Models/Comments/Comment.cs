@@ -23,8 +23,7 @@ public class Comment
     /// The ID of the post that the comment is on.
     /// </summary>
     public int PostId { get; set; }
-    public Post Post { get; set; }
-    
+
     /// <summary>
     /// The content of the comment.
     /// </summary>

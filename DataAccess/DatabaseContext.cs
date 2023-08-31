@@ -12,7 +12,6 @@ public class DatabaseContext : DbContext
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<User> Users { get; set; }
-    //public DbSet<Followers> Followers { get; set; }
     public DbSet<Models.PostLike> PostLikes { get; set; }
     public DbSet<Models.CommentLike> CommentLikes { get; set; }
     public DbSet<Tag> Tags { get; set; }

@@ -24,5 +24,7 @@ public class PostProfile : Profile
         CreateMap<PostPostRequest, Post>().ForMember(post => post.LikeCount,  opt => opt.MapFrom(src => 0));
         CreateMap<PostPostRequest, Post>().ForMember(post => post.Tags,  opt => opt.MapFrom(src => new List<Tag>()));
         CreateMap<PutPostRequest, Post>();
+        CreateMap<Post, SimplePost>();
+        CreateMap<PostLike, SimplePostLike>();
     }
 }

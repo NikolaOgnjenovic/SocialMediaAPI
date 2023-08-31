@@ -117,6 +117,7 @@ public class PostService
                                             likePostRequest.UserId);
         }
         
+        _postLikeRepository.CreatePostLike(postId, likePostRequest.UserId);
         var likedPost = _postRepository.LikePost(postId);
 
         if (likedPost == null)
@@ -135,6 +136,7 @@ public class PostService
                                          likePostRequest.UserId);
         }
         
+        _postLikeRepository.DeletePostLike(postId, likePostRequest.UserId);
         var dislikedPost = _postRepository.DislikePost(postId);
 
         if (dislikedPost == null)

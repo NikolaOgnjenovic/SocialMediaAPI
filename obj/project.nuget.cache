@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "f0qwZLSG9sanBS44AIOEE6m1UihMAAcXXldMlyTxiVAZAsjSsUL+g5EP0j5bx8co9FEzKXUHXNLTTj0hYpjMLQ==",
+  "dgSpecHash": "bmrmVFdkQFz4P4KXX3BdQlt2MLucxhgSn61jq4HIBfGnurx3GmUHxYuGcu1kWb8Pp+iW41IlJKl36HaUhQeF0w==",
   "success": true,
   "projectFilePath": "/home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/SocialConnectAPI.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "/home/mrmi/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/home/mrmi/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
     "/home/mrmi/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",
+    "/home/mrmi/.nuget/packages/castle.core/5.1.0/castle.core.5.1.0.nupkg.sha512",
     "/home/mrmi/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/mrmi/.nuget/packages/microsoft.aspnetcore.openapi/7.0.9/microsoft.aspnetcore.openapi.7.0.9.nupkg.sha512",
     "/home/mrmi/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
@@ -18,6 +19,7 @@
     "/home/mrmi/.nuget/packages/microsoft.entityframeworkcore.abstractions/7.0.10/microsoft.entityframeworkcore.abstractions.7.0.10.nupkg.sha512",
     "/home/mrmi/.nuget/packages/microsoft.entityframeworkcore.analyzers/7.0.10/microsoft.entityframeworkcore.analyzers.7.0.10.nupkg.sha512",
     "/home/mrmi/.nuget/packages/microsoft.entityframeworkcore.design/7.0.10/microsoft.entityframeworkcore.design.7.0.10.nupkg.sha512",
+    "/home/mrmi/.nuget/packages/microsoft.entityframeworkcore.proxies/7.0.10/microsoft.entityframeworkcore.proxies.7.0.10.nupkg.sha512",
     "/home/mrmi/.nuget/packages/microsoft.entityframeworkcore.relational/7.0.10/microsoft.entityframeworkcore.relational.7.0.10.nupkg.sha512",
     "/home/mrmi/.nuget/packages/microsoft.entityframeworkcore.sqlserver/7.0.10/microsoft.entityframeworkcore.sqlserver.7.0.10.nupkg.sha512",
     "/home/mrmi/.nuget/packages/microsoft.entityframeworkcore.tools/7.0.10/microsoft.entityframeworkcore.tools.7.0.10.nupkg.sha512",
@@ -55,6 +57,7 @@
     "/home/mrmi/.nuget/packages/system.codedom/4.4.0/system.codedom.4.4.0.nupkg.sha512",
     "/home/mrmi/.nuget/packages/system.configuration.configurationmanager/5.0.0/system.configuration.configurationmanager.5.0.0.nupkg.sha512",
     "/home/mrmi/.nuget/packages/system.diagnostics.diagnosticsource/5.0.0/system.diagnostics.diagnosticsource.5.0.0.nupkg.sha512",
+    "/home/mrmi/.nuget/packages/system.diagnostics.eventlog/6.0.0/system.diagnostics.eventlog.6.0.0.nupkg.sha512",
     "/home/mrmi/.nuget/packages/system.drawing.common/5.0.0/system.drawing.common.5.0.0.nupkg.sha512",
     "/home/mrmi/.nuget/packages/system.formats.asn1/5.0.0/system.formats.asn1.5.0.0.nupkg.sha512",
     "/home/mrmi/.nuget/packages/system.globalization/4.3.0/system.globalization.4.3.0.nupkg.sha512",

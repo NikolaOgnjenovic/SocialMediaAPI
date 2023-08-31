@@ -1,3 +1,5 @@
+using SocialConnectAPI.Models;
+
 namespace SocialConnectAPI.DTOs.Comments.Put.Request;
 
 public class PutCommentRequest
@@ -11,7 +13,12 @@ public class PutCommentRequest
     /// The ID of the author who wrote the comment.
     /// </summary>
     public int AuthorId { get; set; }
-    
+
+    /// <summary>
+    /// The ID of the post that the comment is on.
+    /// </summary>
+    public int PostId { get; set; }
+
     /// <summary>
     /// The content of the comment.
     /// </summary>
@@ -21,4 +28,8 @@ public class PutCommentRequest
     /// The number of likes the comment has received.
     /// </summary>
     public int LikeCount { get; set; }
+    
+    public List<SimpleCommentLike> UsersWhoLiked { get; set; }
+    
+    public CommentStatus Status { get; set; }
 }

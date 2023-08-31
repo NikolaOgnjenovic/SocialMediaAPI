@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SocialConnectAPI.Models;
 
 namespace SocialConnectAPI.DataAccess.Posts;
@@ -13,7 +14,7 @@ public class PostRepository : IPostRepository
         
     public Post? GetPostById(int postId)
     {
-        return _databaseContext.Posts.FirstOrDefault(post => post.Id == postId);
+        return _databaseContext.Posts.Include(post => post.UsersWhoLiked).FirstOrDefault(post => post.Id == postId);
     }
 
     public Post? GetActivePostById(int postId)

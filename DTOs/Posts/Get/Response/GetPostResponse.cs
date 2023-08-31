@@ -34,4 +34,6 @@ public class GetPostResponse : LinkCollection
     /// The list of tags associated with the post.
     /// </summary>
     public List<Tag> Tags { get; set; }
+    
+    public List<SimplePostLike> UsersWhoLiked { get; set; }
 }

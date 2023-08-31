@@ -1,13 +1,16 @@
-using SocialConnectAPI.DTOs.Hateoas;
-using SocialConnectAPI.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace SocialConnectAPI.DTOs.Comments.Get.Response;
+namespace SocialConnectAPI.Models;
 
-public class GetCommentResponse : LinkCollection
+/// <summary>
+/// Represents a comment made by an author.
+/// </summary>
+public class SimpleComment
 {
     /// <summary>
     /// The unique identifier of the comment.
     /// </summary>
+    [Key]
     public int Id { get; set; }
 
     /// <summary>
@@ -15,6 +18,11 @@ public class GetCommentResponse : LinkCollection
     /// </summary>
     public int AuthorId { get; set; }
     
+    /// <summary>
+    /// The ID of the post that the comment is on.
+    /// </summary>
+    public int PostId { get; set; }
+
     /// <summary>
     /// The content of the comment.
     /// </summary>
@@ -25,7 +33,6 @@ public class GetCommentResponse : LinkCollection
     /// </summary>
     public int LikeCount { get; set; }
     
-        
     public List<SimpleCommentLike> UsersWhoLiked { get; set; }
     
     public CommentStatus Status { get; set; }

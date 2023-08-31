@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SocialConnectAPI.Exceptions;
 using SocialConnectAPI.Models;
 
@@ -14,7 +15,12 @@ public class UserRepository : IUserRepository
     
     public User? GetUserById(int userId)
     {
-        return _databaseContext.Users.FirstOrDefault(user => user.Id == userId);
+        return _databaseContext.Users
+            .Include(user => user.Following)
+            .Include(user => user.Followers)
+            .Include(user => user.PostLikes)
+            .Include(user => user.CommentLikes)
+            .FirstOrDefault(user => user.Id == userId);
     }
 
     public User? GetActiveUserById(int userId)
@@ -57,7 +63,11 @@ public class UserRepository : IUserRepository
             return null;
         }
 
-        userInDatabase = user;
+        // Update the properties of the userInDatabase with the values from the incoming user object
+        userInDatabase.FirstName = user.FirstName;
+        userInDatabase.LastName = user.LastName;
+        userInDatabase.Email = user.Email;
+        
         _databaseContext.SaveChanges();
         return userInDatabase;
     }

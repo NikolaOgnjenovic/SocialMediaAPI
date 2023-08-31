@@ -11,4 +11,9 @@ public class PostCommentRequest
     /// The content of the comment.
     /// </summary>
     public string Content { get; set; }
+    
+    /// <summary>
+    /// The ID of the post that the comment is on.
+    /// </summary>
+    public int PostId { get; set; }
 }

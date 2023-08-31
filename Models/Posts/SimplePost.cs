@@ -1,13 +1,16 @@
-using SocialConnectAPI.DTOs.Hateoas;
-using SocialConnectAPI.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace SocialConnectAPI.DTOs.Posts.Put.Response;
+namespace SocialConnectAPI.Models;
 
-public class PutPostResponse : LinkCollection
+/// <summary>
+/// Represents a post created by an author.
+/// </summary>
+public class SimplePost
 {
     /// <summary>
     /// The unique identifier of the post.
     /// </summary>
+    [Key]
     public int Id { get; set; }
 
     /// <summary>
@@ -26,7 +29,7 @@ public class PutPostResponse : LinkCollection
     public int LikeCount { get; set; }
     
     /// <summary>
-    /// The status of the post.
+    /// The status of the post (Active / Archived).
     /// </summary>
     public PostStatus Status { get; set; }
     
@@ -34,5 +37,6 @@ public class PutPostResponse : LinkCollection
     /// The list of tags associated with the post.
     /// </summary>
     public List<Tag> Tags { get; set; }
+    
     public List<SimplePostLike> UsersWhoLiked { get; set; }
 }

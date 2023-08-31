@@ -21,7 +21,7 @@ public class CommentService
     private readonly IMapper _mapper;
     private readonly ICommentLikeRepository _commentLikeRepository;
     private readonly IPostRepository _postRepository;
-
+    
     public CommentService(ICommentRepository commentRepository, IMapper mapper, ICommentLikeRepository commentLikeRepository, IPostRepository postRepository)
     {
         _commentRepository = commentRepository;
@@ -105,12 +105,13 @@ public class CommentService
 
     public PatchCommentResponse LikeComment(int commentId, LikeCommentRequest likeCommentRequest)
     {
-        if (_commentLikeRepository.CommentIsLiked(commentId,likeCommentRequest.UserId))
+        if (_commentLikeRepository.CommentIsLiked(commentId, likeCommentRequest.UserId))
         {
             throw new CommentLikedException("Comment with id " + commentId + " is already liked by user with id " +
                                             likeCommentRequest.UserId);
         }
         
+        _commentLikeRepository.CreateCommentLike(commentId, likeCommentRequest.UserId);
         var likedComment = _commentRepository.LikeComment(commentId);
 
         if (likedComment == null)
@@ -129,6 +130,7 @@ public class CommentService
                                             likeCommentRequest.UserId);
         }
         
+        _commentLikeRepository.DeleteCommentLike(commentId, likeCommentRequest.UserId);
         var dislikedComment = _commentRepository.DislikeComment(commentId);
 
         if (dislikedComment == null)

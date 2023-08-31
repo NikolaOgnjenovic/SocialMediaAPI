@@ -77,3 +77,5 @@
 /home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/bin/Debug/net7.0/SocialConnectAPI.xml
 /home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/bin/Debug/net7.0/AutoMapper.dll
 /home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/bin/Debug/net7.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/bin/Debug/net7.0/Castle.Core.dll
+/home/mrmi/Programiranje/Projekti/Tiac praksa/SocialConnectAPI/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Proxies.dll

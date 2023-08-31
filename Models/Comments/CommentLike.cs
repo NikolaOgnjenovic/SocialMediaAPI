@@ -10,4 +10,10 @@ public class CommentLike
 
     public int UserId { get; set; }
     public User User { get; set; } // Navigation property to User
+
+    public CommentLike(int commentId, int userId)
+    {
+        CommentId = commentId;
+        UserId = userId;
+    }
 }
