@@ -1,5 +1,3 @@
-using SocialConnectAPI.DTOs.Hateoas;
-
 namespace SocialConnectAPI.DTOs.Users.Post.Request;
 
 public class PostUserRequest

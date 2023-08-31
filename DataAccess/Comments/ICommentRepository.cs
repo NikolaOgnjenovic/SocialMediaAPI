@@ -11,4 +11,6 @@ public interface ICommentRepository
     Comment? DeleteComment(int commentId);
     Comment? LikeComment(int commentId);
     Comment? DislikeComment(int commentId);
+    void SetInactive(int userId);
+    void SetActive(int userId);
 }

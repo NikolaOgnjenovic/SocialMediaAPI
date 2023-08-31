@@ -96,4 +96,16 @@ public class UserService
 
         return _mapper.Map<PatchUserResponse>(updatedUser);
     }
+    
+    public PatchUserResponse SetActive(int userId)
+    {
+        var updatedUser = _userRepository.SetActive(userId);
+
+        if (updatedUser == null)
+        {
+            throw new UserNotFoundException("User with id " + userId + " not found.");
+        }
+
+        return _mapper.Map<PatchUserResponse>(updatedUser);
+    }
 }

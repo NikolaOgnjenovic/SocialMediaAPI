@@ -17,6 +17,7 @@ public class Comment
     /// The ID of the author who wrote the comment.
     /// </summary>
     public int AuthorId { get; set; }
+    public User Author { get; set; }
     
     /// <summary>
     /// The content of the comment.
@@ -27,4 +28,8 @@ public class Comment
     /// The number of likes the comment has received.
     /// </summary>
     public int LikeCount { get; set; }
+    
+    public ICollection<CommentLike> UsersWhoLiked { get; set; }
+    
+    public CommentStatus Status { get; set; }
 }

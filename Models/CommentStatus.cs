@@ -1,8 +1,8 @@
 namespace SocialConnectAPI.Models;
 
-public enum PostStatus
+public enum CommentStatus
 {
     Active,
-    Archived,
+    PostArchived,
     UserInactive
 }

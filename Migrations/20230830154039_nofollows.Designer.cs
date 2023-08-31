@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialConnectAPI.DataAccess;
 
@@ -11,9 +12,11 @@ using SocialConnectAPI.DataAccess;
 namespace SocialConnectAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230830154039_nofollows")]
+    partial class nofollows
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,15 +52,23 @@ namespace SocialConnectAPI.Migrations
 
             modelBuilder.Entity("SocialConnectAPI.Models.CommentLike", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CommentId")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId", "CommentId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CommentId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("CommentLikes");
                 });
@@ -175,13 +186,13 @@ namespace SocialConnectAPI.Migrations
             modelBuilder.Entity("SocialConnectAPI.Models.CommentLike", b =>
                 {
                     b.HasOne("SocialConnectAPI.Models.Comment", "Comment")
-                        .WithMany("UsersWhoLiked")
+                        .WithMany()
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SocialConnectAPI.Models.User", "User")
-                        .WithMany("CommentLikes")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -229,11 +240,6 @@ namespace SocialConnectAPI.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("SocialConnectAPI.Models.Comment", b =>
-                {
-                    b.Navigation("UsersWhoLiked");
-                });
-
             modelBuilder.Entity("SocialConnectAPI.Models.Post", b =>
                 {
                     b.Navigation("Tags");
@@ -243,8 +249,6 @@ namespace SocialConnectAPI.Migrations
 
             modelBuilder.Entity("SocialConnectAPI.Models.User", b =>
                 {
-                    b.Navigation("CommentLikes");
-
                     b.Navigation("PostLikes");
                 });
 #pragma warning restore 612, 618

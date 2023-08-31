@@ -7,6 +7,8 @@ using SocialConnectAPI.DTOs.Users.Post.Response;
 using SocialConnectAPI.DTOs.Users.Put.Request;
 using SocialConnectAPI.DTOs.Users.Put.Response;
 using SocialConnectAPI.Exceptions;
+using SocialConnectAPI.Services.Comments;
+using SocialConnectAPI.Services.Posts;
 using SocialConnectAPI.Services.Users;
 
 namespace SocialConnectAPI.Controllers;
@@ -21,6 +23,8 @@ namespace SocialConnectAPI.Controllers;
 public class UserController : ControllerBase
 {
     private readonly UserService _userService;
+    private readonly CommentService _commentService;
+    private readonly PostService _postService;
     private readonly LinkGenerator _linkGenerator;
     private const string ControllerName = "User";
 
@@ -29,10 +33,12 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="userService">The service for user-related operations.</param>
     /// <param name="linkGenerator">The link generator for creating URIs.</param>
-    public UserController(UserService userService, LinkGenerator linkGenerator)
+    public UserController(UserService userService, LinkGenerator linkGenerator, CommentService commentService, PostService postService)
     {
         _userService = userService;
         _linkGenerator = linkGenerator;
+        _commentService = commentService;
+        _postService = postService;
     }
 
     /// <summary>
@@ -169,7 +175,7 @@ public class UserController : ControllerBase
     /// <summary>
     /// Marks a user as inactive by its ID.
     /// </summary>
-    /// <param name="userId">The ID of the user to archive.</param>
+    /// <param name="userId">The ID of the user to mark as inactive.</param>
     /// <returns>The updated user.</returns>
     [HttpPatch("{userId:int}/set-inactive")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -179,6 +185,32 @@ public class UserController : ControllerBase
         try
         {
             var inactiveUser = _userService.SetInactive(userId);
+            _commentService.SetInactive(userId);
+            _postService.SetInactive(userId);
+            inactiveUser.Links = GenerateUserHateoasLinks(inactiveUser.Id);
+            return Ok(inactiveUser);
+        }
+        catch (UserNotFoundException)
+        {
+            return NotFound();
+        }
+    }
+    
+    /// <summary>
+    /// Marks a user as active by its ID.
+    /// </summary>
+    /// <param name="userId">The ID of the user to mark as active.</param>
+    /// <returns>The updated user.</returns>
+    [HttpPatch("{userId:int}/set-active")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<PatchUserResponse> SetActive(int userId)
+    {
+        try
+        {
+            var inactiveUser = _userService.SetActive(userId);
+            _commentService.SetActive(userId);
+            _postService.SetActive(userId);
             inactiveUser.Links = GenerateUserHateoasLinks(inactiveUser.Id);
             return Ok(inactiveUser);
         }
@@ -216,6 +248,7 @@ public class UserController : ControllerBase
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreateUser)), ControllerName, "POST"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(UpdateUser)), ControllerName, "PUT"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(SetInactive)), ControllerName, "PATCH"),
+                new(_linkGenerator.GetUriByAction(HttpContext, nameof(SetActive)), ControllerName, "PATCH"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(DeleteUser),
                     values: new { userId }), ControllerName, "DELETE")
         };

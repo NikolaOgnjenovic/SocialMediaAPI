@@ -71,4 +71,17 @@ public class UserRepository : IUserRepository
         _databaseContext.SaveChanges();
         return userInDatabase;
     }
+    
+    public User? SetActive(int userId)
+    {
+        var userInDatabase = GetUserById(userId);
+        if (userInDatabase == null)
+        {
+            return null;
+        }
+
+        userInDatabase.Status = UserStatus.Active;
+        _databaseContext.SaveChanges();
+        return userInDatabase;
+    }
 }

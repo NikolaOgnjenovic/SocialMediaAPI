@@ -38,22 +38,15 @@ public class User
     [Required]
     [JsonIgnore]
     public string Password { get; set; }
-    
-    // TODO: Uncomment and implement the FollowingUserIds, LikedPostIds, and LikedCommentIds properties
-    // /// <summary>
-    // /// The list of IDs of users that this user is following.
-    // /// </summary>
-    // public List<int> FollowingUserIds { get; set; }
-    
-    // /// <summary>
-    // /// The list of IDs of posts that this user has liked.
-    // /// </summary>
-    // public List<int> LikedPostIds { get; set; }
-    
-    // /// <summary>
-    // /// The list of IDs of comments that this user has liked.
-    // /// </summary>
-    // public List<int> LikedCommentIds { get; set; }
+
+    public ICollection<PostLike> PostLikes { get; set; }
+    // public ICollection<Followers> Followers { get; set; }
+    // public ICollection<Followers> Following { get; set; }
+
+    /// <summary>
+    /// The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
+    /// </summary>
+    public ICollection<CommentLike> CommentLikes { get; set; }
     
     /// <summary>
     /// The status of the user (Active / Inactive).

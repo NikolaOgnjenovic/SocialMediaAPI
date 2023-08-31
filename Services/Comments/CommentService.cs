@@ -89,4 +89,14 @@ public class CommentService
 
         return _mapper.Map<PatchCommentResponse>(dislikedComment);
     }
+
+    public void SetInactive(int userId)
+    {
+        _commentRepository.SetInactive(userId);
+    }
+    
+    public void SetActive(int userId)
+    {
+        _commentRepository.SetActive(userId);
+    }
 }

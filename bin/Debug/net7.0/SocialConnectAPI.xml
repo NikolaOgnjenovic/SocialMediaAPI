@@ -488,6 +488,16 @@
             The email address of the user. This property is required.
             </summary>
         </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.PostLikes">
+            <summary>
+            The list of PostLike objects that contain the relationship between a liked post's id and the user's id.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.CommentLikes">
+            <summary>
+            The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
+            </summary>
+        </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.Status">
             <summary>
             The status of the user (Active / Inactive).
@@ -508,9 +518,14 @@
             The last name of the user.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.Email">
+        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.PostLikes">
             <summary>
-            The email address of the user. This property is required.
+            The list of PostLike objects that contain the relationship between a liked post's id and the user's id.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.CommentLikes">
+            <summary>
+            The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.Status">
@@ -553,9 +568,14 @@
             The last name of the user.
             </summary>
         </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.Email">
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.PostLikes">
             <summary>
-            The email address of the user. This property is required.
+            The list of PostLike objects that contain the relationship between a liked post's id and the user's id.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.CommentLikes">
+            <summary>
+            The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Post.Response.PostUserResponse.Status">
@@ -583,6 +603,16 @@
             The email address of the user. This property is required.
             </summary>
         </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.PostLikes">
+            <summary>
+            The list of PostLike objects that contain the relationship between a liked post's id and the user's id.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.CommentLikes">
+            <summary>
+            The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
+            </summary>
+        </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Put.Request.PutUserRequest.Status">
             <summary>
             The status of the user (Active / Inactive).
@@ -608,33 +638,43 @@
             The email address of the user. This property is required.
             </summary>
         </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.PostLikes">
+            <summary>
+            The list of PostLike objects that contain the relationship between a liked post's id and the user's id.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.CommentLikes">
+            <summary>
+            The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
+            </summary>
+        </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Put.Response.PutUserResponse.Status">
             <summary>
             The status of the user (Active / Inactive).
             </summary>
         </member>
-        <member name="T:SocialConnectAPI.Migrations.InitialCreate">
+        <member name="T:SocialConnectAPI.Migrations.nofollows">
             <inheritdoc />
         </member>
-        <member name="M:SocialConnectAPI.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:SocialConnectAPI.Migrations.nofollows.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:SocialConnectAPI.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:SocialConnectAPI.Migrations.nofollows.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:SocialConnectAPI.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:SocialConnectAPI.Migrations.nofollows.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:SocialConnectAPI.Migrations.UpdatedUsers">
+        <member name="T:SocialConnectAPI.Migrations.CommentLikes">
             <inheritdoc />
         </member>
-        <member name="M:SocialConnectAPI.Migrations.UpdatedUsers.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:SocialConnectAPI.Migrations.CommentLikes.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:SocialConnectAPI.Migrations.UpdatedUsers.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:SocialConnectAPI.Migrations.CommentLikes.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:SocialConnectAPI.Migrations.UpdatedUsers.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:SocialConnectAPI.Migrations.CommentLikes.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:SocialConnectAPI.Models.Comment">
@@ -660,6 +700,11 @@
         <member name="P:SocialConnectAPI.Models.Comment.LikeCount">
             <summary>
             The number of likes the comment has received.
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.Models.CommentLike">
+            <summary>
+            Represents the relationship between a liked comment and a user.
             </summary>
         </member>
         <member name="T:SocialConnectAPI.Models.Post">
@@ -692,6 +737,36 @@
             The status of the post (Active / Archived).
             </summary>
         </member>
+        <member name="P:SocialConnectAPI.Models.Post.Tags">
+            <summary>
+            The list of tags associated with the post.
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.Models.PostLike">
+            <summary>
+            Represents the relationship between a liked post and a user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.PostLike.PostId">
+            <summary>
+            The unique identifier of the post that the user liked.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.PostLike.UserId">
+            <summary>
+            The unique identifier of the user that liked the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Tag.Id">
+            <summary>
+            The unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Tag.content">
+            <summary>
+            The text content of the tag.
+            </summary>
+        </member>
         <member name="T:SocialConnectAPI.Models.User">
             <summary>
             Represents a user with all attributes.
@@ -720,6 +795,11 @@
         <member name="P:SocialConnectAPI.Models.User.Password">
             <summary>
             The password of the user. This property is required and is not exposed in JSON responses.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.User.CommentLikes">
+            <summary>
+            The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.User.Status">

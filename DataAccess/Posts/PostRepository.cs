@@ -98,4 +98,22 @@ public class PostRepository : IPostRepository
         _databaseContext.SaveChanges();
         return postInDatabase;
     }
+
+    public void SetInactive(int userId)
+    {
+        var postsByUser = GetPostsByUserId(userId);
+        foreach (var post in postsByUser)
+        {
+            post.Status = PostStatus.UserInactive;
+        }
+    }
+    
+    public void SetActive(int userId)
+    {
+        var postsByUser = GetPostsByUserId(userId);
+        foreach (var post in postsByUser)
+        {
+            post.Status = PostStatus.Active;
+        }
+    }
 }

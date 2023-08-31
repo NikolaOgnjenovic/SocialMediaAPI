@@ -17,6 +17,7 @@ public class Post
     /// The ID of the author who created the post.
     /// </summary>
     public int AuthorId { get; set; }
+    public User Author { get; set; }
     
     /// <summary>
     /// The content of the post.
@@ -33,9 +34,10 @@ public class Post
     /// </summary>
     public PostStatus Status { get; set; }
     
-    // TODO: Uncomment and implement the Tags property
-    // /// <summary>
-    // /// The list of tags associated with the post.
-    // /// </summary>
-    // public List<string> Tags { get; set; }
+    /// <summary>
+    /// The list of tags associated with the post.
+    /// </summary>
+    public List<Tag> Tags { get; set; }
+    
+    public ICollection<PostLike> UsersWhoLiked { get; set; }
 }

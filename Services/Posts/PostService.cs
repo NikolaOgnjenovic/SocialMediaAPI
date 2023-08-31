@@ -101,4 +101,14 @@ public class PostService
 
         return _mapper.Map<PatchPostResponse>(dislikedPost);
     }
+
+    public void SetInactive(int userId)
+    {
+        _postRepository.SetInactive(userId);
+    }
+    
+    public void SetActive(int userId)
+    {
+        _postRepository.SetActive(userId);
+    }
 }

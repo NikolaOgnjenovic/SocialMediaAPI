@@ -79,4 +79,22 @@ public class CommentRepository : ICommentRepository
         _databaseContext.SaveChanges();
         return commentInDatabase;
     }
+
+    public void SetInactive(int userId)
+    {
+        var commentsByUser = GetCommentsByUserId(userId);
+        foreach (var comment in commentsByUser)
+        {
+            comment.Status = CommentStatus.UserInactive;
+        }
+    }
+    
+    public void SetActive(int userId)
+    {
+        var commentsByUser = GetCommentsByUserId(userId);
+        foreach (var comment in commentsByUser)
+        {
+            comment.Status = CommentStatus.Active;
+        }
+    }
 }

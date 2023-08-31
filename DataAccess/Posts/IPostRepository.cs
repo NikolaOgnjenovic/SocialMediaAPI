@@ -14,4 +14,6 @@ public interface IPostRepository
     // TODO: Add userId and call user service
     Post? LikePost(int postId);
     Post? DislikePost(int postId);
+    void SetInactive(int userId);
+    void SetActive(int userId);
 }
