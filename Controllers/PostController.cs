@@ -56,6 +56,28 @@ public class PostController : ControllerBase
             return NotFound();
         }
     }
+    
+    /// <summary>
+    /// Retrieves an active post by its ID.
+    /// </summary>
+    /// <param name="postId">The ID of the active post to retrieve.</param>
+    /// <returns>The retrieved active post.</returns>
+    [HttpGet("{postId:int}/active")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<GetPostResponse> GetActivePostById(int postId)
+    {
+        try
+        {
+            var post = _postService.GetActivePostById(postId);
+            post.Links = GeneratePostHateoasLinks(postId);
+            return Ok(post);
+        }
+        catch (PostNotFoundException)
+        {
+            return NotFound();
+        }
+    }
 
     /// <summary>
     /// Retrieves posts associated with a user by their user ID.
@@ -67,6 +89,57 @@ public class PostController : ControllerBase
     public ActionResult<List<GetPostResponse>> GetPostsByUserId(int userId)
     {
         var posts = _postService.GetPostsByUserId(userId);
+        foreach (var post in posts)
+        {
+            post.Links = GeneratePostHateoasLinks(post.Id);
+        }
+        return Ok(posts);
+    }
+    
+    /// <summary>
+    /// Retrieves active posts associated with a user by their user ID.
+    /// </summary>
+    /// <param name="userId">The ID of the user whose active posts to retrieve.</param>
+    /// <returns>The list of active posts associated with the user.</returns>
+    [HttpGet("users/{userId:int}/active")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<List<GetPostResponse>> GetActivePostsByUserId(int userId)
+    {
+        var posts = _postService.GetActivePostsByUserId(userId);
+        foreach (var post in posts)
+        {
+            post.Links = GeneratePostHateoasLinks(post.Id);
+        }
+        return Ok(posts);
+    }
+    
+    /// <summary>
+    /// Retrieves a list of posts that contain the given tag.
+    /// </summary>
+    /// <param name="tag">The tag that the posts need to contain.</param>
+    /// <returns>The list of posts that contain the given tag.</returns>
+    [HttpGet("tags/{tag:alpha}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<List<GetPostResponse>> GetPostsByTag(string tag)
+    {
+        var posts = _postService.GetPostsByTag(tag);
+        foreach (var post in posts)
+        {
+            post.Links = GeneratePostHateoasLinks(post.Id);
+        }
+        return Ok(posts);
+    }
+    
+    /// <summary>
+    /// Retrieves a list of active posts that contain the given tag.
+    /// </summary>
+    /// <param name="tag">The tag that the posts need to contain.</param>
+    /// <returns>The list of active posts that contain the given tag.</returns>
+    [HttpGet("tags/{tag:alpha}/active")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<List<GetPostResponse>> GetActivePostsByTag(string tag)
+    {
+        var posts = _postService.GetActivePostsByTag(tag);
         foreach (var post in posts)
         {
             post.Links = GeneratePostHateoasLinks(post.Id);

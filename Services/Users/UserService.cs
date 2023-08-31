@@ -34,9 +34,33 @@ public class UserService
         return _mapper.Map<GetUserResponse>(user);
     }
     
+    public GetUserResponse GetActiveUserById(int userId)
+    {
+        var user = _userRepository.GetActiveUserById(userId);
+
+        if (user == null)
+        {
+            throw new UserNotFoundException("User with id " + userId + " not found.");
+        }
+
+        return _mapper.Map<GetUserResponse>(user);
+    }
+    
     public GetUserResponse GetUserByEmail(string email)
     {
         var user = _userRepository.GetUserByEmail(email);
+
+        if (user == null)
+        {
+            throw new UserNotFoundException("User with email " + email + " not found.");
+        }
+
+        return _mapper.Map<GetUserResponse>(user);
+    }
+    
+    public GetUserResponse GetActiveUserByEmail(string email)
+    {
+        var user = _userRepository.GetActiveUserByEmail(email);
 
         if (user == null)
         {
@@ -49,6 +73,18 @@ public class UserService
     public GetUserResponse GetUserByFirstAndLastName(string firstName, string lastName)
     {
         var user = _userRepository.GetUserByFirstAndLastName(firstName, lastName);
+
+        if (user == null)
+        {
+            throw new UserNotFoundException("User with first and last name " + firstName + " " + lastName + " not found.");
+        }
+
+        return _mapper.Map<GetUserResponse>(user);
+    }
+    
+    public GetUserResponse GetActiveUserByFirstAndLastName(string firstName, string lastName)
+    {
+        var user = _userRepository.GetActiveUserByFirstAndLastName(firstName, lastName);
 
         if (user == null)
         {

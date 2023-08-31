@@ -33,10 +33,37 @@ public class PostService
 
         return _mapper.Map<GetPostResponse>(post);
     }
+    
+    public GetPostResponse GetActivePostById(int postId)
+    {
+        var post = _postRepository.GetActivePostById(postId);
+
+        if (post == null)
+        {
+            throw new PostNotFoundException("Post with id " + postId + " not found.");
+        }
+
+        return _mapper.Map<GetPostResponse>(post);
+    }
 
     public List<GetPostResponse> GetPostsByUserId(int userId)
     {
         return _mapper.Map<List<GetPostResponse>>(_postRepository.GetPostsByUserId(userId));
+    }
+    
+    public List<GetPostResponse> GetActivePostsByUserId(int userId)
+    {
+        return _mapper.Map<List<GetPostResponse>>(_postRepository.GetActivePostsByUserId(userId));
+    }
+    
+    public List<GetPostResponse> GetPostsByTag(string tag)
+    {
+        return _mapper.Map<List<GetPostResponse>>(_postRepository.GetPostsByTag(tag));
+    }
+    
+    public List<GetPostResponse> GetActivePostsByTag(string tag)
+    {
+        return _mapper.Map<List<GetPostResponse>>(_postRepository.GetActivePostsByTag(tag));
     }
 
     public PostPostResponse CreatePost(PostPostRequest postPostRequest)

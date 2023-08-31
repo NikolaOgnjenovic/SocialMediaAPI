@@ -15,10 +15,20 @@ public class CommentRepository : ICommentRepository
     {
         return _databaseContext.Comments.FirstOrDefault(comment => comment.Id == commentId);
     }
+    
+    public Comment? GetActiveCommentById(int commentId)
+    {
+        return _databaseContext.Comments.FirstOrDefault(comment => comment.Id == commentId && comment.Status == CommentStatus.Active);
+    }
 
     public List<Comment> GetCommentsByUserId(int userId)
     {
         return _databaseContext.Comments.ToList().FindAll(comment => comment.AuthorId == userId);
+    }
+    
+    public List<Comment> GetActiveCommentsByUserId(int userId)
+    {
+        return _databaseContext.Comments.ToList().FindAll(comment => comment.AuthorId == userId && comment.Status == CommentStatus.Active);
     }
 
     public Comment CreateComment(Comment comment)
@@ -56,7 +66,7 @@ public class CommentRepository : ICommentRepository
 
     public Comment? LikeComment(int commentId)
     {
-        var commentInDatabase = GetCommentById(commentId);
+        var commentInDatabase = GetActiveCommentById(commentId);
         if (commentInDatabase == null)
         {
             return null;
@@ -69,7 +79,7 @@ public class CommentRepository : ICommentRepository
 
     public Comment? DislikeComment(int commentId)
     {
-        var commentInDatabase = GetCommentById(commentId);
+        var commentInDatabase = GetActiveCommentById(commentId);
         if (commentInDatabase == null)
         {
             return null;

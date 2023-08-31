@@ -56,6 +56,28 @@ public class CommentController : ControllerBase
             return NotFound();
         }
     }
+    
+    /// <summary>
+    /// Retrieves an active comment by its ID.
+    /// </summary>
+    /// <param name="commentId">The ID of the active comment to retrieve.</param>
+    /// <returns>The retrieved active comment.</returns>
+    [HttpGet("{commentId:int}/active")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<GetCommentResponse> GetActiveCommentById(int commentId)
+    {
+        try
+        {
+            var comment = _commentService.GetActiveCommentById(commentId);
+            comment.Links = GenerateCommentHateoasLinks(commentId);
+            return Ok(comment);
+        }
+        catch (CommentNotFoundException)
+        {
+            return NotFound();
+        }
+    }
 
     /// <summary>
     /// Retrieves comments associated with a user by their user ID.
@@ -67,6 +89,23 @@ public class CommentController : ControllerBase
     public ActionResult<List<GetCommentResponse>> GetCommentsByUserId(int userId)
     {
         var comments = _commentService.GetCommentsByUserId(userId);
+        foreach (var comment in comments)
+        {
+            comment.Links = GenerateCommentHateoasLinks(comment.Id);
+        }
+        return Ok(comments);
+    }
+    
+    /// <summary>
+    /// Retrieves active comments associated with a user by their user ID.
+    /// </summary>
+    /// <param name="userId">The ID of the user whose active comments to retrieve.</param>
+    /// <returns>The list of active comments associated with the user.</returns>
+    [HttpGet("users/{userId:int}/active")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<List<GetCommentResponse>> GetActiveCommentsByUserId(int userId)
+    {
+        var comments = _commentService.GetActiveCommentsByUserId(userId);
         foreach (var comment in comments)
         {
             comment.Links = GenerateCommentHateoasLinks(comment.Id);
@@ -200,7 +239,12 @@ public class CommentController : ControllerBase
             new(
                 _linkGenerator.GetUriByAction(HttpContext, nameof(GetCommentById),
                     values: new { commentId }), ControllerName, "GET"),
+            new(
+                _linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveCommentById),
+                    values: new { commentId }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetCommentsByUserId), values: new { userId = 1 }),
+                ControllerName, "GET"),
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveCommentsByUserId), values: new { userId = 1 }),
                 ControllerName, "GET"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreateComment)), ControllerName, "POST"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(UpdateComment)), ControllerName, "PUT"),

@@ -33,10 +33,27 @@ public class CommentService
 
         return _mapper.Map<GetCommentResponse>(comment);
     }
+    
+    public GetCommentResponse GetActiveCommentById(int commentId)
+    {
+        var comment = _commentRepository.GetActiveCommentById(commentId);
+
+        if (comment == null)
+        {
+            throw new CommentNotFoundException("Comment with id " + commentId + " not found.");
+        }
+
+        return _mapper.Map<GetCommentResponse>(comment);
+    }
 
     public List<GetCommentResponse> GetCommentsByUserId(int userId)
     {
         return _mapper.Map<List<GetCommentResponse>>(_commentRepository.GetCommentsByUserId(userId));
+    }
+    
+    public List<GetCommentResponse> GetActiveCommentsByUserId(int userId)
+    {
+        return _mapper.Map<List<GetCommentResponse>>(_commentRepository.GetActiveCommentsByUserId(userId));
     }
 
     public PostCommentResponse CreateComment(PostCommentRequest postCommentRequest)

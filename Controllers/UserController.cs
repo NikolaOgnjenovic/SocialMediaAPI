@@ -64,6 +64,28 @@ public class UserController : ControllerBase
     }
     
     /// <summary>
+    /// Retrieves an active user by its ID.
+    /// </summary>
+    /// <param name="userId">The ID of the active user to retrieve.</param>
+    /// <returns>The retrieved user.</returns>
+    [HttpGet("{userId:int}/active")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<GetUserResponse> GetActiveUserById(int userId)
+    {
+        try
+        {
+            var user = _userService.GetActiveUserById(userId);
+            user.Links = GenerateUserHateoasLinks(userId);
+            return Ok(user);
+        }
+        catch (UserNotFoundException)
+        {
+            return NotFound();
+        }
+    }
+    
+    /// <summary>
     /// Retrieves a user by its email.
     /// </summary>
     /// <param name="email">The email of the user to retrieve.</param>
@@ -76,6 +98,28 @@ public class UserController : ControllerBase
         try
         {
             var user = _userService.GetUserByEmail(email);
+            user.Links = GenerateUserHateoasLinks(0);
+            return Ok(user);
+        }
+        catch (UserNotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+    /// <summary>
+    /// Retrieves an active user by its email.
+    /// </summary>
+    /// <param name="email">The email of the active user to retrieve.</param>
+    /// <returns>The retrieved active user.</returns>
+    [HttpGet("{email:alpha}/active")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<GetUserResponse> GetActiveUserByEmail(string email)
+    {
+        try
+        {
+            var user = _userService.GetActiveUserByEmail(email);
             user.Links = GenerateUserHateoasLinks(0);
             return Ok(user);
         }
@@ -99,6 +143,29 @@ public class UserController : ControllerBase
         try
         {
             var user = _userService.GetUserByFirstAndLastName(firstName, lastName);
+            user.Links = GenerateUserHateoasLinks(0);
+            return Ok(user);
+        }
+        catch (UserNotFoundException)
+        {
+            return NotFound();
+        }
+    }
+    
+    /// <summary>
+    /// Retrieves an active user by its first and last name.
+    /// </summary>
+    /// <param name="firstName">The first name of the user to retrieve.</param>
+    /// <param name="lastName">The first name of the user to retrieve.</param>
+    /// <returns>The retrieved user.</returns>
+    [HttpGet("{firstName:alpha}/{lastName:alpha}/active")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<GetUserResponse> GetActiveUserByFirstAndLastName(string firstName, string lastName)
+    {
+        try
+        {
+            var user = _userService.GetActiveUserByFirstAndLastName(firstName, lastName);
             user.Links = GenerateUserHateoasLinks(0);
             return Ok(user);
         }
@@ -241,9 +308,15 @@ public class UserController : ControllerBase
         {
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetUserById),
                     values: new { userId }), ControllerName, "GET"),
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveUserById),
+                values: new { userId }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetUserByEmail),
                 values: new { exampleEmail }), ControllerName, "GET"),
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveUserByEmail),
+                values: new { exampleEmail }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetUserByFirstAndLastName),
+                values: new { exampleFirstName, exampleLastName }), ControllerName, "GET"),
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveUserByFirstAndLastName),
                 values: new { exampleFirstName, exampleLastName }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreateUser)), ControllerName, "POST"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(UpdateUser)), ControllerName, "PUT"),

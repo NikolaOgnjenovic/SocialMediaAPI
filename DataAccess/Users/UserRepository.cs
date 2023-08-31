@@ -16,16 +16,31 @@ public class UserRepository : IUserRepository
         return _databaseContext.Users.FirstOrDefault(user => user.Id == userId);
     }
 
+    public User? GetActiveUserById(int userId)
+    {
+        return _databaseContext.Users.FirstOrDefault(user => user.Id == userId && user.Status == UserStatus.Active);
+    }
+    
     public User? GetUserByEmail(string email)
     {
         return _databaseContext.Users.FirstOrDefault(user => user.Email == email);
     }
-
+    
+    public User? GetActiveUserByEmail(string email)
+    {
+        return _databaseContext.Users.FirstOrDefault(user => user.Email == email && user.Status == UserStatus.Active);
+    }
+    
     public User? GetUserByFirstAndLastName(string firstName, string lastName)
     {
         return _databaseContext.Users.FirstOrDefault(user => user.LastName == lastName && user.FirstName == firstName);
     }
 
+    public User? GetActiveUserByFirstAndLastName(string firstName, string lastName)
+    {
+        return _databaseContext.Users.FirstOrDefault(user => user.LastName == lastName && user.FirstName == firstName && user.Status == UserStatus.Active);
+    }
+    
     public User CreateUser(User user)
     {
         var createdUser = _databaseContext.Users.Add(user);

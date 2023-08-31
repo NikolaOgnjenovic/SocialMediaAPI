@@ -5,7 +5,9 @@ namespace SocialConnectAPI.DataAccess.Comments;
 public interface ICommentRepository
 {
     Comment? GetCommentById(int commentId);
+    Comment? GetActiveCommentById(int commentId);
     List<Comment> GetCommentsByUserId(int userId);
+    List<Comment> GetActiveCommentsByUserId(int userId);
     Comment CreateComment(Comment comment);
     Comment? UpdateComment(Comment comment);
     Comment? DeleteComment(int commentId);

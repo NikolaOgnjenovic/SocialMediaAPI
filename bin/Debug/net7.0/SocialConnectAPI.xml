@@ -23,12 +23,26 @@
             <param name="commentId">The ID of the comment to retrieve.</param>
             <returns>The retrieved comment.</returns>
         </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.GetActiveCommentById(System.Int32)">
+            <summary>
+            Retrieves an active comment by its ID.
+            </summary>
+            <param name="commentId">The ID of the active comment to retrieve.</param>
+            <returns>The retrieved active comment.</returns>
+        </member>
         <member name="M:SocialConnectAPI.Controllers.CommentController.GetCommentsByUserId(System.Int32)">
             <summary>
             Retrieves comments associated with a user by their user ID.
             </summary>
             <param name="userId">The ID of the user whose comments to retrieve.</param>
             <returns>The list of comments associated with the user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.CommentController.GetActiveCommentsByUserId(System.Int32)">
+            <summary>
+            Retrieves active comments associated with a user by their user ID.
+            </summary>
+            <param name="userId">The ID of the user whose active comments to retrieve.</param>
+            <returns>The list of active comments associated with the user.</returns>
         </member>
         <member name="M:SocialConnectAPI.Controllers.CommentController.CreateComment(SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest)">
             <summary>
@@ -90,12 +104,40 @@
             <param name="postId">The ID of the post to retrieve.</param>
             <returns>The retrieved post.</returns>
         </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.GetActivePostById(System.Int32)">
+            <summary>
+            Retrieves an active post by its ID.
+            </summary>
+            <param name="postId">The ID of the active post to retrieve.</param>
+            <returns>The retrieved active post.</returns>
+        </member>
         <member name="M:SocialConnectAPI.Controllers.PostController.GetPostsByUserId(System.Int32)">
             <summary>
             Retrieves posts associated with a user by their user ID.
             </summary>
             <param name="userId">The ID of the user whose posts to retrieve.</param>
             <returns>The list of posts associated with the user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.GetActivePostsByUserId(System.Int32)">
+            <summary>
+            Retrieves active posts associated with a user by their user ID.
+            </summary>
+            <param name="userId">The ID of the user whose active posts to retrieve.</param>
+            <returns>The list of active posts associated with the user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.GetPostsByTag(System.String)">
+            <summary>
+            Retrieves a list of posts that contain the given tag.
+            </summary>
+            <param name="tag">The tag that the posts need to contain.</param>
+            <returns>The list of posts that contain the given tag.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.PostController.GetActivePostsByTag(System.String)">
+            <summary>
+            Retrieves a list of active posts that contain the given tag.
+            </summary>
+            <param name="tag">The tag that the posts need to contain.</param>
+            <returns>The list of active posts that contain the given tag.</returns>
         </member>
         <member name="M:SocialConnectAPI.Controllers.PostController.CreatePost(SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest)">
             <summary>
@@ -150,7 +192,7 @@
             Represents a controller for managing users in the API.
             </summary>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.UserController.#ctor(SocialConnectAPI.Services.Users.UserService,Microsoft.AspNetCore.Routing.LinkGenerator)">
+        <member name="M:SocialConnectAPI.Controllers.UserController.#ctor(SocialConnectAPI.Services.Users.UserService,Microsoft.AspNetCore.Routing.LinkGenerator,SocialConnectAPI.Services.Comments.CommentService,SocialConnectAPI.Services.Posts.PostService)">
             <summary>
             Initializes a new instance of the <see cref="T:SocialConnectAPI.Controllers.UserController"/> class.
             </summary>
@@ -164,6 +206,13 @@
             <param name="userId">The ID of the user to retrieve.</param>
             <returns>The retrieved user.</returns>
         </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.GetActiveUserById(System.Int32)">
+            <summary>
+            Retrieves an active user by its ID.
+            </summary>
+            <param name="userId">The ID of the active user to retrieve.</param>
+            <returns>The retrieved user.</returns>
+        </member>
         <member name="M:SocialConnectAPI.Controllers.UserController.GetUserByEmail(System.String)">
             <summary>
             Retrieves a user by its email.
@@ -171,9 +220,24 @@
             <param name="email">The email of the user to retrieve.</param>
             <returns>The retrieved user.</returns>
         </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.GetActiveUserByEmail(System.String)">
+            <summary>
+            Retrieves an active user by its email.
+            </summary>
+            <param name="email">The email of the active user to retrieve.</param>
+            <returns>The retrieved active user.</returns>
+        </member>
         <member name="M:SocialConnectAPI.Controllers.UserController.GetUserByFirstAndLastName(System.String,System.String)">
             <summary>
             Retrieves a user by its first and last name.
+            </summary>
+            <param name="firstName">The first name of the user to retrieve.</param>
+            <param name="lastName">The first name of the user to retrieve.</param>
+            <returns>The retrieved user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.GetActiveUserByFirstAndLastName(System.String,System.String)">
+            <summary>
+            Retrieves an active user by its first and last name.
             </summary>
             <param name="firstName">The first name of the user to retrieve.</param>
             <param name="lastName">The first name of the user to retrieve.</param>
@@ -204,7 +268,14 @@
             <summary>
             Marks a user as inactive by its ID.
             </summary>
-            <param name="userId">The ID of the user to archive.</param>
+            <param name="userId">The ID of the user to mark as inactive.</param>
+            <returns>The updated user.</returns>
+        </member>
+        <member name="M:SocialConnectAPI.Controllers.UserController.SetActive(System.Int32)">
+            <summary>
+            Marks a user as active by its ID.
+            </summary>
+            <param name="userId">The ID of the user to mark as active.</param>
             <returns>The updated user.</returns>
         </member>
         <member name="M:SocialConnectAPI.Controllers.UserController.GetOptions">
@@ -466,6 +537,31 @@
         <member name="P:SocialConnectAPI.DTOs.Posts.Put.Response.PutPostResponse.Status">
             <summary>
             The status of the post (e.g., Draft, Published, etc.).
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.DTOs.Users.Following.UserFollower">
+            <summary>
+            Represents a user follower.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Following.UserFollower.Id">
+            <summary>
+            The unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Following.UserFollower.FirstName">
+            <summary>
+            The first name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Following.UserFollower.LastName">
+            <summary>
+            The last name of the user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Following.UserFollower.Email">
+            <summary>
+            The email address of the user. This property is required.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.Id">

@@ -10,21 +10,39 @@ public class PostRepository : IPostRepository
     {
         _databaseContext = databaseContext;
     }
-    
+        
     public Post? GetPostById(int postId)
     {
         return _databaseContext.Posts.FirstOrDefault(post => post.Id == postId);
+    }
+
+    public Post? GetActivePostById(int postId)
+    {
+        return _databaseContext.Posts.FirstOrDefault(post => post.Id == postId && post.Status == PostStatus.Active);
     }
 
     public List<Post> GetPostsByUserId(int userId)
     {
         return _databaseContext.Posts.ToList().FindAll(post => post.AuthorId == userId);
     }
+
+    public List<Post> GetActivePostsByUserId(int userId)
+    {
+        return _databaseContext.Posts.ToList().FindAll(post => post.AuthorId == userId && post.Status == PostStatus.Active);
+    }
     
     public List<Post> GetPostsByTag(string tag)
     {
-        throw new NotImplementedException("Tag search not implemented");
-        //return _databaseContext.Posts.ToList().FindAll(post => post.AuthorId == userId);
+        return _databaseContext.Posts
+            .Where(post => post.Tags.Any(t => t.content == tag))
+            .ToList();
+    }
+
+    public List<Post> GetActivePostsByTag(string tag)
+    {
+        return _databaseContext.Posts
+            .Where(post => post.Status == PostStatus.Active && post.Tags.Any(t => t.content == tag))
+            .ToList();
     }
 
     public Post CreatePost(Post post)
@@ -75,7 +93,7 @@ public class PostRepository : IPostRepository
     
     public Post? LikePost(int postId)
     {
-        var postInDatabase = GetPostById(postId);
+        var postInDatabase = GetActivePostById(postId);
         if (postInDatabase == null)
         {
             return null;
@@ -88,7 +106,7 @@ public class PostRepository : IPostRepository
 
     public Post? DislikePost(int postId)
     {
-        var postInDatabase = GetPostById(postId);
+        var postInDatabase = GetActivePostById(postId);
         if (postInDatabase == null)
         {
             return null;

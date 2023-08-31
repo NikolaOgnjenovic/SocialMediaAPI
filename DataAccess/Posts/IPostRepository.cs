@@ -5,8 +5,11 @@ namespace SocialConnectAPI.DataAccess.Posts;
 public interface IPostRepository
 {
     Post? GetPostById(int postId);
-    List<Post>? GetPostsByUserId(int userId);
-    List<Post>? GetPostsByTag(string tag);
+    Post? GetActivePostById(int postId);
+    List<Post> GetPostsByUserId(int userId);
+    List<Post> GetActivePostsByUserId(int userId);
+    List<Post> GetPostsByTag(string tag);
+    List<Post> GetActivePostsByTag(string tag);
     Post CreatePost(Post post);
     Post? UpdatePost(Post post);
     Post? DeletePost(int postId);
