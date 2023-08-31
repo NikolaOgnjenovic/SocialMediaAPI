@@ -1,6 +1,8 @@
 using AutoMapper;
+using SocialConnectAPI.DataAccess.CommentLike;
 using SocialConnectAPI.DataAccess.Comments;
 using SocialConnectAPI.DTOs.Comments.Get.Response;
+using SocialConnectAPI.DTOs.Comments.Patch.Request;
 using SocialConnectAPI.DTOs.Comments.Patch.Response;
 using SocialConnectAPI.DTOs.Comments.Post.Request;
 using SocialConnectAPI.DTOs.Comments.Post.Response;
@@ -15,11 +17,13 @@ public class CommentService
 {
     private readonly ICommentRepository _commentRepository;
     private readonly IMapper _mapper;
+    private readonly ICommentLikeRepository _commentLikeRepository;
 
-    public CommentService(ICommentRepository commentRepository, IMapper mapper)
+    public CommentService(ICommentRepository commentRepository, IMapper mapper, ICommentLikeRepository commentLikeRepository)
     {
         _commentRepository = commentRepository;
         _mapper = mapper;
+        _commentLikeRepository = commentLikeRepository;
     }
     
     public GetCommentResponse GetCommentById(int commentId)
@@ -83,8 +87,14 @@ public class CommentService
         }
     }
 
-    public PatchCommentResponse LikeComment(int commentId)
+    public PatchCommentResponse LikeComment(int commentId, LikeCommentRequest likeCommentRequest)
     {
+        if (_commentLikeRepository.CommentIsLiked(commentId,likeCommentRequest.UserId))
+        {
+            throw new CommentLikedException("Comment with id " + commentId + " is already liked by user with id " +
+                                            likeCommentRequest.UserId);
+        }
+        
         var likedComment = _commentRepository.LikeComment(commentId);
 
         if (likedComment == null)
@@ -95,8 +105,14 @@ public class CommentService
         return _mapper.Map<PatchCommentResponse>(likedComment);
     }
 
-    public PatchCommentResponse DislikeComment(int commentId)
+    public PatchCommentResponse DislikeComment(int commentId, LikeCommentRequest likeCommentRequest)
     {
+        if (!_commentLikeRepository.CommentIsLiked(commentId, likeCommentRequest.UserId))
+        {
+            throw new CommentLikedException("Comment with id " + commentId + " is not liked by user with id " +
+                                            likeCommentRequest.UserId);
+        }
+        
         var dislikedComment = _commentRepository.DislikeComment(commentId);
 
         if (dislikedComment == null)
@@ -115,5 +131,10 @@ public class CommentService
     public void SetActive(int userId)
     {
         _commentRepository.SetActive(userId);
+    }
+
+    public void ArchiveByPostId(int postId)
+    {
+        _commentRepository.ArchiveByPostId(postId);
     }
 }

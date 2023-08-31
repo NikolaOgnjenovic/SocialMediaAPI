@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using SocialConnectAPI.DTOs.Comments.Get.Response;
+using SocialConnectAPI.DTOs.Comments.Patch.Request;
 using SocialConnectAPI.DTOs.Comments.Patch.Response;
 using SocialConnectAPI.DTOs.Comments.Post.Request;
 using SocialConnectAPI.DTOs.Comments.Post.Response;
 using SocialConnectAPI.DTOs.Comments.Put.Request;
 using SocialConnectAPI.DTOs.Comments.Put.Response;
 using SocialConnectAPI.DTOs.Hateoas;
+using SocialConnectAPI.DTOs.Users.Post.Request;
 using SocialConnectAPI.Exceptions;
 using SocialConnectAPI.Services.Comments;
 
@@ -185,17 +187,21 @@ public class CommentController : ControllerBase
     [HttpPatch("{commentId:int}/like")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<PatchCommentResponse> LikeComment(int commentId)
+    public ActionResult<PatchCommentResponse> LikeComment(int commentId, [FromBody] LikeCommentRequest likeCommentRequest)
     {
         try
         {
-            var likedComment = _commentService.LikeComment(commentId);
+            var likedComment = _commentService.LikeComment(commentId, likeCommentRequest);
             likedComment.Links = GenerateCommentHateoasLinks(likedComment.Id);
             return Ok(likedComment);
         }
         catch (CommentNotFoundException)
         {
             return NotFound();
+        }
+        catch (CommentLikedException)
+        {
+            return Forbid();
         }
     }
 
@@ -207,17 +213,21 @@ public class CommentController : ControllerBase
     [HttpPatch("{commentId:int}/dislike")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<PatchCommentResponse> DislikeComment(int commentId)
+    public ActionResult<PatchCommentResponse> DislikeComment(int commentId, [FromBody] LikeCommentRequest likeCommentRequest)
     {
         try
         {
-            var dislikedComment = _commentService.DislikeComment(commentId);
+            var dislikedComment = _commentService.DislikeComment(commentId, likeCommentRequest);
             dislikedComment.Links = GenerateCommentHateoasLinks(dislikedComment.Id);
             return Ok(dislikedComment);
         }
         catch (CommentNotFoundException)
         {
             return NotFound();
+        }
+        catch (CommentLikedException)
+        {
+            return Forbid();
         }
     }
 

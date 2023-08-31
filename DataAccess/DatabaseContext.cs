@@ -13,8 +13,8 @@ public class DatabaseContext : DbContext
     public DbSet<Post> Posts { get; set; }
     public DbSet<User> Users { get; set; }
     //public DbSet<Followers> Followers { get; set; }
-    public DbSet<PostLike> PostLikes { get; set; }
-    public DbSet<CommentLike> CommentLikes { get; set; }
+    public DbSet<Models.PostLike> PostLikes { get; set; }
+    public DbSet<Models.CommentLike> CommentLikes { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,32 +25,32 @@ public class DatabaseContext : DbContext
         }
         
         // Configure many-to-many relationship between User and Post
-        modelBuilder.Entity<PostLike>()
+        modelBuilder.Entity<Models.PostLike>()
             .HasKey(ul => new { ul.UserId, ul.PostId });
 
-        modelBuilder.Entity<PostLike>()
+        modelBuilder.Entity<Models.PostLike>()
             .HasOne(ul => ul.User)
             .WithMany(u => u.PostLikes)
             .HasForeignKey(ul => ul.UserId)
             .OnDelete(DeleteBehavior.Restrict); // Set cascade behavior to restrict
 
-        modelBuilder.Entity<PostLike>()
+        modelBuilder.Entity<Models.PostLike>()
             .HasOne(ul => ul.Post)
             .WithMany(p => p.UsersWhoLiked)
             .HasForeignKey(ul => ul.PostId)
             .OnDelete(DeleteBehavior.Restrict); // Set cascade behavior to restrict
         
         // Configure many-to-many relationship between User and Comment
-        modelBuilder.Entity<CommentLike>()
+        modelBuilder.Entity<Models.CommentLike>()
             .HasKey(ul => new { ul.UserId, ul.CommentId });
 
-        modelBuilder.Entity<CommentLike>()
+        modelBuilder.Entity<Models.CommentLike>()
             .HasOne(ul => ul.User)
             .WithMany(u => u.CommentLikes)
             .HasForeignKey(ul => ul.UserId)
             .OnDelete(DeleteBehavior.Restrict); // Set cascade behavior to restrict
 
-        modelBuilder.Entity<CommentLike>()
+        modelBuilder.Entity<Models.CommentLike>()
             .HasOne(ul => ul.Comment)
             .WithMany(c => c.UsersWhoLiked)
             .HasForeignKey(ul => ul.CommentId)

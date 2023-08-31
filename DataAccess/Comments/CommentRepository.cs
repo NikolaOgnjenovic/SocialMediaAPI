@@ -97,6 +97,8 @@ public class CommentRepository : ICommentRepository
         {
             comment.Status = CommentStatus.UserInactive;
         }
+
+        _databaseContext.SaveChanges();
     }
     
     public void SetActive(int userId)
@@ -106,5 +108,17 @@ public class CommentRepository : ICommentRepository
         {
             comment.Status = CommentStatus.Active;
         }
+        
+        _databaseContext.SaveChanges();
+    }
+
+    public void ArchiveByPostId(int postId)
+    {
+        var commentsByPostId = _databaseContext.Comments.ToList().FindAll(comment => comment.PostId == postId);
+        foreach (var comment in commentsByPostId)
+        {
+            comment.Status = CommentStatus.PostArchived;
+        }
+        _databaseContext.SaveChanges();
     }
 }

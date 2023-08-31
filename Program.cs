@@ -2,9 +2,12 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SocialConnectAPI.DataAccess;
+using SocialConnectAPI.DataAccess.CommentLike;
 using SocialConnectAPI.DataAccess.Comments;
+using SocialConnectAPI.DataAccess.PostLike;
 using SocialConnectAPI.DataAccess.Posts;
 using SocialConnectAPI.DataAccess.Users;
+using SocialConnectAPI.Models;
 using SocialConnectAPI.Services.Comments;
 using SocialConnectAPI.Services.Posts;
 using SocialConnectAPI.Services.Users;
@@ -36,8 +39,10 @@ builder.Services.AddSwaggerGen(c => {
 
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<CommentService, CommentService>();
+builder.Services.AddScoped<ICommentLikeRepository, CommentLikeRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<PostService, PostService>();
+builder.Services.AddScoped<IPostLikeRepository, PostLikeRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<UserService, UserService>();
 

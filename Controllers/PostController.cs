@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using SocialConnectAPI.DTOs.Hateoas;
 using SocialConnectAPI.DTOs.Posts.Get.Response;
+using SocialConnectAPI.DTOs.Posts.Patch.Request;
 using SocialConnectAPI.DTOs.Posts.Patch.Response;
 using SocialConnectAPI.DTOs.Posts.Post.Request;
 using SocialConnectAPI.DTOs.Posts.Post.Response;
 using SocialConnectAPI.DTOs.Posts.Put.Request;
 using SocialConnectAPI.DTOs.Posts.Put.Response;
 using SocialConnectAPI.Exceptions;
+using SocialConnectAPI.Services.Comments;
 using SocialConnectAPI.Services.Posts;
 
 namespace SocialConnectAPI.Controllers;
@@ -21,6 +23,7 @@ namespace SocialConnectAPI.Controllers;
 public class PostController : ControllerBase
 {
     private readonly PostService _postService;
+    private readonly CommentService _commentService;
     private readonly LinkGenerator _linkGenerator;
     private const string ControllerName = "Post";
 
@@ -29,10 +32,11 @@ public class PostController : ControllerBase
     /// </summary>
     /// <param name="postService">The service for post-related operations.</param>
     /// <param name="linkGenerator">The link generator for creating URIs.</param>
-    public PostController(PostService postService, LinkGenerator linkGenerator)
+    public PostController(PostService postService, LinkGenerator linkGenerator, CommentService commentService)
     {
         _postService = postService;
         _linkGenerator = linkGenerator;
+        _commentService = commentService;
     }
 
     /// <summary>
@@ -224,6 +228,7 @@ public class PostController : ControllerBase
         try
         {
             var archivedPost = _postService.ArchivePost(postId);
+            _commentService.ArchiveByPostId(postId);
             archivedPost.Links = GeneratePostHateoasLinks(archivedPost.Id);
             return Ok(archivedPost);
         }
@@ -241,17 +246,21 @@ public class PostController : ControllerBase
     [HttpPatch("{postId:int}/like")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<PatchPostResponse> LikePost(int postId)
+    public ActionResult<PatchPostResponse> LikePost(int postId, [FromBody] LikePostRequest likePostRequest)
     {
         try
         {
-            var likedPost = _postService.LikePost(postId);
+            var likedPost = _postService.LikePost(postId, likePostRequest);
             likedPost.Links = GeneratePostHateoasLinks(likedPost.Id);
             return Ok(likedPost);
         }
         catch (PostNotFoundException)
         {
             return NotFound();
+        }
+        catch (PostLikedException)
+        {
+            return Forbid();
         }
     }
 
@@ -263,17 +272,21 @@ public class PostController : ControllerBase
     [HttpPatch("{postId:int}/dislike")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<PatchPostResponse> DislikePost(int postId)
+    public ActionResult<PatchPostResponse> DislikePost(int postId, [FromBody] LikePostRequest likePostRequest)
     {
         try
         {
-            var dislikedPost = _postService.DislikePost(postId);
+            var dislikedPost = _postService.DislikePost(postId, likePostRequest);
             dislikedPost.Links = GeneratePostHateoasLinks(dislikedPost.Id);
             return Ok(dislikedPost);
         }
         catch (PostNotFoundException)
         {
             return NotFound();
+        }
+        catch (PostLikedException)
+        {
+            return Forbid();
         }
     }
 

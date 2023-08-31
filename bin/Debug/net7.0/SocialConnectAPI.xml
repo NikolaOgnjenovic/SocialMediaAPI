@@ -65,14 +65,14 @@
             <param name="commentId">The ID of the comment to delete.</param>
             <returns>The result of the delete operation.</returns>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.CommentController.LikeComment(System.Int32)">
+        <member name="M:SocialConnectAPI.Controllers.CommentController.LikeComment(System.Int32,SocialConnectAPI.DTOs.Comments.Patch.Request.LikeCommentRequest)">
             <summary>
             Likes a comment by its ID.
             </summary>
             <param name="commentId">The ID of the comment to like.</param>
             <returns>The liked comment.</returns>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.CommentController.DislikeComment(System.Int32)">
+        <member name="M:SocialConnectAPI.Controllers.CommentController.DislikeComment(System.Int32,SocialConnectAPI.DTOs.Comments.Patch.Request.LikeCommentRequest)">
             <summary>
             Dislikes a comment by its ID.
             </summary>
@@ -90,7 +90,7 @@
             Represents a controller for managing posts in the API.
             </summary>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.PostController.#ctor(SocialConnectAPI.Services.Posts.PostService,Microsoft.AspNetCore.Routing.LinkGenerator)">
+        <member name="M:SocialConnectAPI.Controllers.PostController.#ctor(SocialConnectAPI.Services.Posts.PostService,Microsoft.AspNetCore.Routing.LinkGenerator,SocialConnectAPI.Services.Comments.CommentService)">
             <summary>
             Initializes a new instance of the <see cref="T:SocialConnectAPI.Controllers.PostController"/> class.
             </summary>
@@ -167,14 +167,14 @@
             <param name="postId">The ID of the post to archive.</param>
             <returns>The archived post.</returns>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.PostController.LikePost(System.Int32)">
+        <member name="M:SocialConnectAPI.Controllers.PostController.LikePost(System.Int32,SocialConnectAPI.DTOs.Posts.Patch.Request.LikePostRequest)">
             <summary>
             Likes a post by its ID.
             </summary>
             <param name="postId">The ID of the post to like.</param>
             <returns>The liked post.</returns>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.PostController.DislikePost(System.Int32)">
+        <member name="M:SocialConnectAPI.Controllers.PostController.DislikePost(System.Int32,SocialConnectAPI.DTOs.Posts.Patch.Request.LikePostRequest)">
             <summary>
             Dislikes a post by its ID.
             </summary>
@@ -786,6 +786,11 @@
         <member name="P:SocialConnectAPI.Models.Comment.AuthorId">
             <summary>
             The ID of the author who wrote the comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.Models.Comment.PostId">
+            <summary>
+            The ID of the post that the comment is on.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.Models.Comment.Content">

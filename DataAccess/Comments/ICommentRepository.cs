@@ -15,4 +15,5 @@ public interface ICommentRepository
     Comment? DislikeComment(int commentId);
     void SetInactive(int userId);
     void SetActive(int userId);
+    void ArchiveByPostId(int postId);
 }

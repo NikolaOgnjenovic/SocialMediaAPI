@@ -1,6 +1,8 @@
 using AutoMapper;
+using SocialConnectAPI.DataAccess.PostLike;
 using SocialConnectAPI.DataAccess.Posts;
 using SocialConnectAPI.DTOs.Posts.Get.Response;
+using SocialConnectAPI.DTOs.Posts.Patch.Request;
 using SocialConnectAPI.DTOs.Posts.Patch.Response;
 using SocialConnectAPI.DTOs.Posts.Post.Request;
 using SocialConnectAPI.DTOs.Posts.Post.Response;
@@ -15,11 +17,13 @@ public class PostService
 {
     private readonly IPostRepository _postRepository;
     private readonly IMapper _mapper;
+    private readonly IPostLikeRepository _postLikeRepository;
 
-    public PostService(IPostRepository postRepository, IMapper mapper)
+    public PostService(IPostRepository postRepository, IMapper mapper, IPostLikeRepository postLikeRepository)
     {
         _postRepository = postRepository;
         _mapper = mapper;
+        _postLikeRepository = postLikeRepository;
     }
     
     public GetPostResponse GetPostById(int postId)
@@ -105,8 +109,14 @@ public class PostService
         return _mapper.Map<PatchPostResponse>(archivedPost);
     }
     
-    public PatchPostResponse LikePost(int postId)
+    public PatchPostResponse LikePost(int postId, LikePostRequest likePostRequest)
     {
+        if (_postLikeRepository.PostIsLiked(postId, likePostRequest.UserId))
+        {
+            throw new PostLikedException("Post with id " + postId + " is already liked by user with id " +
+                                            likePostRequest.UserId);
+        }
+        
         var likedPost = _postRepository.LikePost(postId);
 
         if (likedPost == null)
@@ -117,8 +127,14 @@ public class PostService
         return _mapper.Map<PatchPostResponse>(likedPost);
     }
 
-    public PatchPostResponse DislikePost(int postId)
+    public PatchPostResponse DislikePost(int postId, LikePostRequest likePostRequest)
     {
+        if (!_postLikeRepository.PostIsLiked(postId, likePostRequest.UserId))
+        {
+            throw new PostLikedException("Post with id " + postId + " is not liked by user with id " +
+                                         likePostRequest.UserId);
+        }
+        
         var dislikedPost = _postRepository.DislikePost(postId);
 
         if (dislikedPost == null)
