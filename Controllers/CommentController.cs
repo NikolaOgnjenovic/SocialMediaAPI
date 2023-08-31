@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SocialConnectAPI.DTOs.Comments.Delete.Request;
 using SocialConnectAPI.DTOs.Comments.Get.Response;
 using SocialConnectAPI.DTOs.Comments.Patch.Request;
 using SocialConnectAPI.DTOs.Comments.Patch.Response;
@@ -7,7 +8,6 @@ using SocialConnectAPI.DTOs.Comments.Post.Response;
 using SocialConnectAPI.DTOs.Comments.Put.Request;
 using SocialConnectAPI.DTOs.Comments.Put.Response;
 using SocialConnectAPI.DTOs.Hateoas;
-using SocialConnectAPI.DTOs.Users.Post.Request;
 using SocialConnectAPI.Exceptions;
 using SocialConnectAPI.Services.Comments;
 
@@ -58,7 +58,7 @@ public class CommentController : ControllerBase
             return NotFound();
         }
     }
-    
+
     /// <summary>
     /// Retrieves an active comment by its ID.
     /// </summary>
@@ -95,9 +95,10 @@ public class CommentController : ControllerBase
         {
             comment.Links = GenerateCommentHateoasLinks(comment.Id);
         }
+
         return Ok(comments);
     }
-    
+
     /// <summary>
     /// Retrieves active comments associated with a user by their user ID.
     /// </summary>
@@ -112,6 +113,7 @@ public class CommentController : ControllerBase
         {
             comment.Links = GenerateCommentHateoasLinks(comment.Id);
         }
+
         return Ok(comments);
     }
 
@@ -160,18 +162,23 @@ public class CommentController : ControllerBase
     /// <returns>The result of the delete operation.</returns>
     [HttpDelete("{commentId:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status304NotModified)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult DeleteComment(int commentId)
+    public ActionResult DeleteComment(int commentId, [FromBody] DeleteCommentRequest deleteCommentRequest)
     {
         try
         {
-            _commentService.DeleteComment(commentId);
+            _commentService.DeleteComment(commentId, deleteCommentRequest);
             return NoContent();
         }
         catch (CommentNotFoundException)
         {
             return NotFound();
+        }
+        catch (CommentNotDeletedException)
+        {
+            return StatusCode(StatusCodes.Status304NotModified);
         }
         catch (Exception e)
         {
@@ -183,11 +190,14 @@ public class CommentController : ControllerBase
     /// Likes a comment by its ID.
     /// </summary>
     /// <param name="commentId">The ID of the comment to like.</param>
+    /// <param name="likeCommentRequest">The like post request that contains the ID of the user liking the comment.</param>
     /// <returns>The liked comment.</returns>
     [HttpPatch("{commentId:int}/like")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status304NotModified)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<PatchCommentResponse> LikeComment(int commentId, [FromBody] LikeCommentRequest likeCommentRequest)
+    public ActionResult<PatchCommentResponse> LikeComment(int commentId,
+        [FromBody] LikeCommentRequest likeCommentRequest)
     {
         try
         {
@@ -201,7 +211,7 @@ public class CommentController : ControllerBase
         }
         catch (CommentLikedException)
         {
-            return Forbid();
+            return StatusCode(StatusCodes.Status304NotModified);
         }
     }
 
@@ -209,11 +219,14 @@ public class CommentController : ControllerBase
     /// Dislikes a comment by its ID.
     /// </summary>
     /// <param name="commentId">The ID of the comment to dislike.</param>
+    /// <param name="likeCommentRequest">The like post request that contains the ID of the user disliking the comment.</param>
     /// <returns>The disliked comment.</returns>
     [HttpPatch("{commentId:int}/dislike")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status304NotModified)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<PatchCommentResponse> DislikeComment(int commentId, [FromBody] LikeCommentRequest likeCommentRequest)
+    public ActionResult<PatchCommentResponse> DislikeComment(int commentId,
+        [FromBody] LikeCommentRequest likeCommentRequest)
     {
         try
         {
@@ -227,7 +240,7 @@ public class CommentController : ControllerBase
         }
         catch (CommentLikedException)
         {
-            return Forbid();
+            return StatusCode(StatusCodes.Status304NotModified);
         }
     }
 
@@ -254,14 +267,16 @@ public class CommentController : ControllerBase
                     values: new { commentId }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetCommentsByUserId), values: new { userId = 1 }),
                 ControllerName, "GET"),
-            new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveCommentsByUserId), values: new { userId = 1 }),
+            new(
+                _linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveCommentsByUserId),
+                    values: new { userId = 1 }),
                 ControllerName, "GET"),
-                new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreateComment)), ControllerName, "POST"),
-                new(_linkGenerator.GetUriByAction(HttpContext, nameof(UpdateComment)), ControllerName, "PUT"),
-                new(_linkGenerator.GetUriByAction(HttpContext, nameof(LikeComment)), ControllerName, "PATCH"),
-                new(_linkGenerator.GetUriByAction(HttpContext, nameof(DislikeComment)), ControllerName, "PATCH"),
-                new(_linkGenerator.GetUriByAction(HttpContext, nameof(DeleteComment),
-                    values: new { commentId }), ControllerName, "DELETE")
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreateComment)), ControllerName, "POST"),
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(UpdateComment)), ControllerName, "PUT"),
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(LikeComment)), ControllerName, "PATCH"),
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(DislikeComment)), ControllerName, "PATCH"),
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(DeleteComment),
+                values: new { commentId }), ControllerName, "DELETE")
         };
     }
 }

@@ -39,5 +39,5 @@ public class Post
     /// </summary>
     public List<Tag> Tags { get; set; }
     
-    public ICollection<PostLike> UsersWhoLiked { get; set; }
+    public List<PostLike> UsersWhoLiked { get; set; }
 }

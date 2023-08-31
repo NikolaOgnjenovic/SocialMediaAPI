@@ -14,7 +14,6 @@ public interface IPostRepository
     Post? UpdatePost(Post post);
     Post? DeletePost(int postId);
     Post? ArchivePost(int postId);
-    // TODO: Add userId and call user service
     Post? LikePost(int postId);
     Post? DislikePost(int postId);
     void SetInactive(int userId);

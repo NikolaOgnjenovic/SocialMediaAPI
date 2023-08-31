@@ -32,6 +32,7 @@ public class PostController : ControllerBase
     /// </summary>
     /// <param name="postService">The service for post-related operations.</param>
     /// <param name="linkGenerator">The link generator for creating URIs.</param>
+    /// <param name="commentService">The service for comment-related operations.</param>
     public PostController(PostService postService, LinkGenerator linkGenerator, CommentService commentService)
     {
         _postService = postService;
@@ -242,9 +243,11 @@ public class PostController : ControllerBase
     /// Likes a post by its ID.
     /// </summary>
     /// <param name="postId">The ID of the post to like.</param>
+    /// <param name="likePostRequest">The like post request that contains the ID of the user liking the post.</param>
     /// <returns>The liked post.</returns>
     [HttpPatch("{postId:int}/like")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status304NotModified)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<PatchPostResponse> LikePost(int postId, [FromBody] LikePostRequest likePostRequest)
     {
@@ -260,7 +263,7 @@ public class PostController : ControllerBase
         }
         catch (PostLikedException)
         {
-            return Forbid();
+            return StatusCode(StatusCodes.Status304NotModified);
         }
     }
 
@@ -268,9 +271,11 @@ public class PostController : ControllerBase
     /// Dislikes a post by its ID.
     /// </summary>
     /// <param name="postId">The ID of the post to dislike.</param>
+    /// <param name="likePostRequest">The like post request that contains the ID of the user disliking the post.</param>
     /// <returns>The disliked post.</returns>
     [HttpPatch("{postId:int}/dislike")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status304NotModified)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<PatchPostResponse> DislikePost(int postId, [FromBody] LikePostRequest likePostRequest)
     {
@@ -286,7 +291,7 @@ public class PostController : ControllerBase
         }
         catch (PostLikedException)
         {
-            return Forbid();
+            return StatusCode(StatusCodes.Status304NotModified);
         }
     }
 
@@ -308,8 +313,19 @@ public class PostController : ControllerBase
             new(
                 _linkGenerator.GetUriByAction(HttpContext, nameof(GetPostById),
                     values: new { postId }), ControllerName, "GET"),
+            new(
+                _linkGenerator.GetUriByAction(HttpContext, nameof(GetActivePostById),
+                    values: new { postId }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetPostsByUserId), values: new { userId = 1 }),
                 ControllerName, "GET"),
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetActivePostsByUserId), values: new { userId = 1 }),
+                ControllerName, "GET"),
+            new(
+                _linkGenerator.GetUriByAction(HttpContext, nameof(GetPostsByTag),
+                    values: new { postId }), ControllerName, "GET"),
+            new(
+                _linkGenerator.GetUriByAction(HttpContext, nameof(GetActivePostsByTag),
+                    values: new { postId }), ControllerName, "GET"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreatePost)), ControllerName, "POST"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(UpdatePost)), ControllerName, "PUT"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(LikePost)), ControllerName, "PATCH"),

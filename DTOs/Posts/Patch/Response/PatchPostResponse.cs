@@ -26,13 +26,12 @@ public class PatchPostResponse : LinkCollection
     public int LikeCount { get; set; }
     
     /// <summary>
-    /// The status of the post (e.g., Draft, Published, etc.).
+    /// The status of the post.
     /// </summary>
     public PostStatus Status { get; set; }
     
-    // TODO: Uncomment and implement the Tags property
-    // /// <summary>
-    // /// The list of tags associated with the post.
-    // /// </summary>
-    // public List<string> Tags { get; set; }
+    /// <summary>
+    /// The list of tags associated with the post.
+    /// </summary>
+    public List<Tag> Tags { get; set; }
 }

@@ -39,14 +39,14 @@ public class User
     [JsonIgnore]
     public string Password { get; set; }
 
-    public ICollection<PostLike> PostLikes { get; set; }
-    // public ICollection<Followers> Followers { get; set; }
-    // public ICollection<Followers> Following { get; set; }
-
+    public List<PostLike> PostLikes { get; set; }
     /// <summary>
     /// The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
     /// </summary>
-    public ICollection<CommentLike> CommentLikes { get; set; }
+    public List<CommentLike> CommentLikes { get; set; }
+    
+    public List<User> Followers { get; set; }
+    public List<User> Following { get; set; }
     
     /// <summary>
     /// The status of the user (Active / Inactive).

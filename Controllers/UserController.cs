@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SocialConnectAPI.DTOs.Hateoas;
 using SocialConnectAPI.DTOs.Users.Get.Response;
+using SocialConnectAPI.DTOs.Users.Patch.Request;
 using SocialConnectAPI.DTOs.Users.Patch.Response;
 using SocialConnectAPI.DTOs.Users.Post.Request;
 using SocialConnectAPI.DTOs.Users.Post.Response;
@@ -26,13 +27,19 @@ public class UserController : ControllerBase
     private readonly CommentService _commentService;
     private readonly PostService _postService;
     private readonly LinkGenerator _linkGenerator;
+    
     private const string ControllerName = "User";
+    private const string ExampleEmail = "Example@mail.com";
+    private const string ExampleFirstName = "John";
+    private const string ExampleLastName = "Doe";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserController"/> class.
     /// </summary>
     /// <param name="userService">The service for user-related operations.</param>
     /// <param name="linkGenerator">The link generator for creating URIs.</param>
+    /// <param name="commentService">The service for comment-related operations.</param>
+    /// <param name="postService">The service for post-related operations.</param>
     public UserController(UserService userService, LinkGenerator linkGenerator, CommentService commentService, PostService postService)
     {
         _userService = userService;
@@ -275,15 +282,69 @@ public class UserController : ControllerBase
     {
         try
         {
-            var inactiveUser = _userService.SetActive(userId);
+            var activeUser = _userService.SetActive(userId);
             _commentService.SetActive(userId);
             _postService.SetActive(userId);
-            inactiveUser.Links = GenerateUserHateoasLinks(inactiveUser.Id);
-            return Ok(inactiveUser);
+            activeUser.Links = GenerateUserHateoasLinks(activeUser.Id);
+            return Ok(activeUser);
         }
         catch (UserNotFoundException)
         {
             return NotFound();
+        }
+    }
+    
+    /// <summary>
+    /// Follows a user.
+    /// </summary>
+    /// <param name="followUserRequest">The follow patch request which holds the follower & followed user IDs.</param>
+    /// <returns>The updated user on success, NotFound if one of the two users doesn't exist or NotModified if the follower is already following the followed user.</returns>
+    [HttpPatch("follow")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status304NotModified)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<PatchUserResponse> FollowUser([FromBody] FollowUserRequest followUserRequest)
+    {
+        try
+        {
+            var updatedUser = _userService.FollowUser(followUserRequest);
+            updatedUser.Links = GenerateUserHateoasLinks(updatedUser.Id);
+            return Ok(updatedUser);
+        }
+        catch (UserNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (UserFollowedException)
+        {
+            return StatusCode(StatusCodes.Status304NotModified);
+        }
+    }
+    
+    /// <summary>
+    /// Unfollows a user.
+    /// </summary>
+    /// <param name="followUserRequest">The follow patch request which holds the follower & followed user IDs.</param>
+    /// <returns>The updated user on success, NotFound if one of the two users doesn't exist or NotModified if the follower is not following the followed user.</returns>
+    [HttpPatch("unfollow")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status304NotModified)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<PatchUserResponse> UnfollowUser([FromBody] FollowUserRequest followUserRequest)
+    {
+        try
+        {
+            var updatedUser = _userService.UnfollowUser(followUserRequest);
+            updatedUser.Links = GenerateUserHateoasLinks(updatedUser.Id);
+            return Ok(updatedUser);
+        }
+        catch (UserNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (UserFollowedException)
+        {
+            return StatusCode(StatusCodes.Status304NotModified);
         }
     }
 
@@ -300,10 +361,6 @@ public class UserController : ControllerBase
 
     private List<Link> GenerateUserHateoasLinks(int userId)
     {
-        string exampleEmail = "example@mail.com";
-        string exampleFirstName = "John";
-        string exampleLastName = "Doe";
-        
         return new List<Link>
         {
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetUserById),
@@ -311,17 +368,19 @@ public class UserController : ControllerBase
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveUserById),
                 values: new { userId }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetUserByEmail),
-                values: new { exampleEmail }), ControllerName, "GET"),
+                values: new { ExampleEmail }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveUserByEmail),
-                values: new { exampleEmail }), ControllerName, "GET"),
+                values: new { ExampleEmail }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetUserByFirstAndLastName),
-                values: new { exampleFirstName, exampleLastName }), ControllerName, "GET"),
+                values: new { ExampleFirstName, ExampleLastName }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveUserByFirstAndLastName),
-                values: new { exampleFirstName, exampleLastName }), ControllerName, "GET"),
+                values: new { ExampleFirstName, ExampleLastName }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreateUser)), ControllerName, "POST"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(UpdateUser)), ControllerName, "PUT"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(SetInactive)), ControllerName, "PATCH"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(SetActive)), ControllerName, "PATCH"),
+                new(_linkGenerator.GetUriByAction(HttpContext, nameof(FollowUser)), ControllerName, "PATCH"),
+                new(_linkGenerator.GetUriByAction(HttpContext, nameof(UnfollowUser)), ControllerName, "PATCH"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(DeleteUser),
                     values: new { userId }), ControllerName, "DELETE")
         };

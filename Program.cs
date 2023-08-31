@@ -7,7 +7,6 @@ using SocialConnectAPI.DataAccess.Comments;
 using SocialConnectAPI.DataAccess.PostLike;
 using SocialConnectAPI.DataAccess.Posts;
 using SocialConnectAPI.DataAccess.Users;
-using SocialConnectAPI.Models;
 using SocialConnectAPI.Services.Comments;
 using SocialConnectAPI.Services.Posts;
 using SocialConnectAPI.Services.Users;

@@ -1,9 +1,9 @@
-namespace SocialConnectAPI.DTOs.Posts.Patch.Request;
+namespace SocialConnectAPI.DTOs.Comments.Delete.Request;
 
 /// <summary>
-/// Represents a request to like a post.
+/// Represents a request to delete a comment.
 /// </summary>
-public class LikePostRequest
+public class DeleteCommentRequest
 {
     /// <summary>
     /// The user ID of the user performing the action.

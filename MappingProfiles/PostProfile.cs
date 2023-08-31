@@ -20,6 +20,9 @@ public class PostProfile : Profile
 
         // Mark post as active when posting without a status
         CreateMap<PostPostRequest, Post>().ForMember(post => post.Status,  opt => opt.MapFrom(src => PostStatus.Active));
+        CreateMap<PostPostRequest, Post>().ForMember(post => post.UsersWhoLiked,  opt => opt.MapFrom(src => new List<PostLike>()));
+        CreateMap<PostPostRequest, Post>().ForMember(post => post.LikeCount,  opt => opt.MapFrom(src => 0));
+        CreateMap<PostPostRequest, Post>().ForMember(post => post.Tags,  opt => opt.MapFrom(src => new List<Tag>()));
         CreateMap<PutPostRequest, Post>();
     }
 }

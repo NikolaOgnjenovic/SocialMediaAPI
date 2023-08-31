@@ -1,6 +1,7 @@
 using AutoMapper;
 using SocialConnectAPI.DataAccess.Users;
 using SocialConnectAPI.DTOs.Users.Get.Response;
+using SocialConnectAPI.DTOs.Users.Patch.Request;
 using SocialConnectAPI.DTOs.Users.Patch.Response;
 using SocialConnectAPI.DTOs.Users.Post.Request;
 using SocialConnectAPI.DTOs.Users.Post.Response;
@@ -140,6 +141,30 @@ public class UserService
         if (updatedUser == null)
         {
             throw new UserNotFoundException("User with id " + userId + " not found.");
+        }
+
+        return _mapper.Map<PatchUserResponse>(updatedUser);
+    }
+
+    public PatchUserResponse FollowUser(FollowUserRequest followUserRequest)
+    {
+        var updatedUser = _userRepository.FollowUser(followUserRequest.FollowerId, followUserRequest.FollowedId);
+        
+        if (updatedUser == null)
+        {
+            throw new UserNotFoundException("User with id " + followUserRequest.FollowerId + " not found.");
+        }
+
+        return _mapper.Map<PatchUserResponse>(updatedUser);
+    }
+    
+    public PatchUserResponse UnfollowUser(FollowUserRequest followUserRequest)
+    {
+        var updatedUser = _userRepository.UnfollowUser(followUserRequest.FollowerId, followUserRequest.FollowedId);
+        
+        if (updatedUser == null)
+        {
+            throw new UserNotFoundException("User with id " + followUserRequest.FollowerId + " not found.");
         }
 
         return _mapper.Map<PatchUserResponse>(updatedUser);

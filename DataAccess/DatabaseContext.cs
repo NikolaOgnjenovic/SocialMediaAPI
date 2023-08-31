@@ -55,6 +55,11 @@ public class DatabaseContext : DbContext
             .WithMany(c => c.UsersWhoLiked)
             .HasForeignKey(ul => ul.CommentId)
             .OnDelete(DeleteBehavior.Restrict); // Set cascade behavior to restrict
+        
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Followers)
+            .WithMany(u => u.Following)
+            .UsingEntity(j => j.ToTable("UserFollowers"));
 
         base.OnModelCreating(modelBuilder);
     }

@@ -70,6 +70,7 @@
             Likes a comment by its ID.
             </summary>
             <param name="commentId">The ID of the comment to like.</param>
+            <param name="likeCommentRequest">The like post request that contains the ID of the user liking the comment.</param>
             <returns>The liked comment.</returns>
         </member>
         <member name="M:SocialConnectAPI.Controllers.CommentController.DislikeComment(System.Int32,SocialConnectAPI.DTOs.Comments.Patch.Request.LikeCommentRequest)">
@@ -77,6 +78,7 @@
             Dislikes a comment by its ID.
             </summary>
             <param name="commentId">The ID of the comment to dislike.</param>
+            <param name="likeCommentRequest">The like post request that contains the ID of the user disliking the comment.</param>
             <returns>The disliked comment.</returns>
         </member>
         <member name="M:SocialConnectAPI.Controllers.CommentController.GetOptions">
@@ -96,6 +98,7 @@
             </summary>
             <param name="postService">The service for post-related operations.</param>
             <param name="linkGenerator">The link generator for creating URIs.</param>
+            <param name="commentService">The service for comment-related operations.</param>
         </member>
         <member name="M:SocialConnectAPI.Controllers.PostController.GetPostById(System.Int32)">
             <summary>
@@ -172,6 +175,7 @@
             Likes a post by its ID.
             </summary>
             <param name="postId">The ID of the post to like.</param>
+            <param name="likePostRequest">The like post request that contains the ID of the user liking the post.</param>
             <returns>The liked post.</returns>
         </member>
         <member name="M:SocialConnectAPI.Controllers.PostController.DislikePost(System.Int32,SocialConnectAPI.DTOs.Posts.Patch.Request.LikePostRequest)">
@@ -179,6 +183,7 @@
             Dislikes a post by its ID.
             </summary>
             <param name="postId">The ID of the post to dislike.</param>
+            <param name="likePostRequest">The like post request that contains the ID of the user disliking the post.</param>
             <returns>The disliked post.</returns>
         </member>
         <member name="M:SocialConnectAPI.Controllers.PostController.GetOptions">
@@ -198,6 +203,8 @@
             </summary>
             <param name="userService">The service for user-related operations.</param>
             <param name="linkGenerator">The link generator for creating URIs.</param>
+            <param name="commentService">The service for comment-related operations.</param>
+            <param name="postService">The service for post-related operations.</param>
         </member>
         <member name="M:SocialConnectAPI.Controllers.UserController.GetUserById(System.Int32)">
             <summary>
@@ -278,6 +285,8 @@
             <param name="userId">The ID of the user to mark as active.</param>
             <returns>The updated user.</returns>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:SocialConnectAPI.Controllers.UserController.FollowUser(SocialConnectAPI.DTOs.Users.Patch.Request.FollowUserRequest)" -->
+        <!-- Badly formed XML comment ignored for member "M:SocialConnectAPI.Controllers.UserController.UnfollowUser(SocialConnectAPI.DTOs.Users.Patch.Request.FollowUserRequest)" -->
         <member name="M:SocialConnectAPI.Controllers.UserController.GetOptions">
             <summary>
             Retrieves the allowed HTTP methods for the current endpoint.
@@ -304,24 +313,39 @@
             The number of likes the comment has received.
             </summary>
         </member>
+        <member name="T:SocialConnectAPI.DTOs.Comments.Patch.Request.LikeCommentRequest">
+            <summary>
+            Represents a request to like a comment.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Request.LikeCommentRequest.UserId">
+            <summary>
+            The user ID of the user performing the action.
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse">
+            <summary>
+            Represents the response after patching (updating) a comment.
+            </summary>
+        </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.Id">
             <summary>
-            The unique identifier of the comment.
+            Gets or sets the unique identifier of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.AuthorId">
             <summary>
-            The ID of the author who wrote the comment.
+            Gets or sets the ID of the author who wrote the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.Content">
             <summary>
-            The content of the comment.
+            Gets or sets the content of the comment.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Patch.Response.PatchCommentResponse.LikeCount">
             <summary>
-            The number of likes the comment has received.
+            Gets or sets the number of likes the comment has received.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest.AuthorId">
@@ -332,11 +356,6 @@
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest.Content">
             <summary>
             The content of the comment.
-            </summary>
-        </member>
-        <member name="P:SocialConnectAPI.DTOs.Comments.Post.Request.PostCommentRequest.LikeCount">
-            <summary>
-            The number of likes the comment has received.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Comments.Post.Response.PostCommentResponse.Id">
@@ -421,7 +440,22 @@
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Get.Response.GetPostResponse.Status">
             <summary>
-            The status of the post (e.g., Draft, Published, etc.).
+            The status of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Get.Response.GetPostResponse.Tags">
+            <summary>
+            The list of tags associated with the post.
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.DTOs.Posts.Patch.Request.LikePostRequest">
+            <summary>
+            Represents a request to like a post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.Request.LikePostRequest.UserId">
+            <summary>
+            The user ID of the user performing the action.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Patch.Response.PatchPostResponse.Id">
@@ -446,7 +480,12 @@
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Patch.Response.PatchPostResponse.Status">
             <summary>
-            The status of the post (e.g., Draft, Published, etc.).
+            The status of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Patch.Response.PatchPostResponse.Tags">
+            <summary>
+            The list of tags associated with the post.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.AuthorId">
@@ -462,6 +501,11 @@
         <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.LikeCount">
             <summary>
             The number of likes the post has received.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.Tags">
+            <summary>
+            The list of tags associated with the post.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.Id">
@@ -486,7 +530,12 @@
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.Status">
             <summary>
-            The status of the post (e.g., Draft, Published, etc.).
+            The status of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.Tags">
+            <summary>
+            The list of tags associated with the post.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Put.Request.PutPostRequest.Id">
@@ -511,7 +560,12 @@
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Put.Request.PutPostRequest.Status">
             <summary>
-            The status of the post (e.g., Draft, Published, etc.).
+            The status of the post.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Request.PutPostRequest.Tags">
+            <summary>
+            The list of tags associated with the post.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Put.Response.PutPostResponse.Id">
@@ -536,32 +590,12 @@
         </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Put.Response.PutPostResponse.Status">
             <summary>
-            The status of the post (e.g., Draft, Published, etc.).
+            The status of the post.
             </summary>
         </member>
-        <member name="T:SocialConnectAPI.DTOs.Users.Following.UserFollower">
+        <member name="P:SocialConnectAPI.DTOs.Posts.Put.Response.PutPostResponse.Tags">
             <summary>
-            Represents a user follower.
-            </summary>
-        </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Following.UserFollower.Id">
-            <summary>
-            The unique identifier of the user.
-            </summary>
-        </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Following.UserFollower.FirstName">
-            <summary>
-            The first name of the user.
-            </summary>
-        </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Following.UserFollower.LastName">
-            <summary>
-            The last name of the user.
-            </summary>
-        </member>
-        <member name="P:SocialConnectAPI.DTOs.Users.Following.UserFollower.Email">
-            <summary>
-            The email address of the user. This property is required.
+            The list of tags associated with the post.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.Id">
@@ -597,6 +631,21 @@
         <member name="P:SocialConnectAPI.DTOs.Users.Get.Response.GetUserResponse.Status">
             <summary>
             The status of the user (Active / Inactive).
+            </summary>
+        </member>
+        <member name="T:SocialConnectAPI.DTOs.Users.Patch.Request.FollowUserRequest">
+            <summary>
+            Represents a request to follow or unfollow a user.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Request.FollowUserRequest.FollowerId">
+            <summary>
+            The user ID of the user following or unfollowing.
+            </summary>
+        </member>
+        <member name="P:SocialConnectAPI.DTOs.Users.Patch.Request.FollowUserRequest.FollowedId">
+            <summary>
+            The user ID of the user being followed or unfollowed.
             </summary>
         </member>
         <member name="P:SocialConnectAPI.DTOs.Users.Patch.Response.PatchUserResponse.Id">
@@ -749,6 +798,72 @@
             The status of the user (Active / Inactive).
             </summary>
         </member>
+        <member name="T:SocialConnectAPI.Exceptions.CommentLikedException">
+            <summary>
+            Represents an exception that is thrown when a comment has already been liked when liking or hasn't been liked when disliking.
+            </summary>
+        </member>
+        <member name="M:SocialConnectAPI.Exceptions.CommentLikedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SocialConnectAPI.Exceptions.CommentLikedException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+        </member>
+        <member name="T:SocialConnectAPI.Exceptions.CommentNotFoundException">
+            <summary>
+            Represents an exception that is thrown when a comment is not found.
+            </summary>
+        </member>
+        <member name="M:SocialConnectAPI.Exceptions.CommentNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SocialConnectAPI.Exceptions.CommentNotFoundException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+        </member>
+        <member name="T:SocialConnectAPI.Exceptions.PostLikedException">
+            <summary>
+            Represents an exception that is thrown when a post has already been liked when liking or hasn't been liked when disliking.
+            </summary>
+        </member>
+        <member name="M:SocialConnectAPI.Exceptions.PostLikedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SocialConnectAPI.Exceptions.PostLikedException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+        </member>
+        <member name="T:SocialConnectAPI.Exceptions.PostNotFoundException">
+            <summary>
+            Represents an exception that is thrown when a post is not found.
+            </summary>
+        </member>
+        <member name="M:SocialConnectAPI.Exceptions.PostNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SocialConnectAPI.Exceptions.PostNotFoundException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+        </member>
+        <member name="T:SocialConnectAPI.Exceptions.UserFollowedException">
+            <summary>
+            Represents an exception that is thrown when a user is or isn't followed.
+            </summary>
+        </member>
+        <member name="M:SocialConnectAPI.Exceptions.UserFollowedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SocialConnectAPI.Exceptions.UserFollowedException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+        </member>
+        <member name="T:SocialConnectAPI.Exceptions.UserNotFoundException">
+            <summary>
+            Represents an exception that is thrown when a user is not found.
+            </summary>
+        </member>
+        <member name="M:SocialConnectAPI.Exceptions.UserNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SocialConnectAPI.Exceptions.UserNotFoundException"/> class with a specified error message.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+        </member>
         <member name="T:SocialConnectAPI.Migrations.nofollows">
             <inheritdoc />
         </member>
@@ -771,6 +886,30 @@
             <inheritdoc />
         </member>
         <member name="M:SocialConnectAPI.Migrations.CommentLikes.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:SocialConnectAPI.Migrations.Followers">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.Followers.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.Followers.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.Followers.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:SocialConnectAPI.Migrations.ListCleanup">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.ListCleanup.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.ListCleanup.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.ListCleanup.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:SocialConnectAPI.Models.Comment">

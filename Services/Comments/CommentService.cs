@@ -1,6 +1,8 @@
 using AutoMapper;
 using SocialConnectAPI.DataAccess.CommentLike;
 using SocialConnectAPI.DataAccess.Comments;
+using SocialConnectAPI.DataAccess.Posts;
+using SocialConnectAPI.DTOs.Comments.Delete.Request;
 using SocialConnectAPI.DTOs.Comments.Get.Response;
 using SocialConnectAPI.DTOs.Comments.Patch.Request;
 using SocialConnectAPI.DTOs.Comments.Patch.Response;
@@ -18,12 +20,14 @@ public class CommentService
     private readonly ICommentRepository _commentRepository;
     private readonly IMapper _mapper;
     private readonly ICommentLikeRepository _commentLikeRepository;
+    private readonly IPostRepository _postRepository;
 
-    public CommentService(ICommentRepository commentRepository, IMapper mapper, ICommentLikeRepository commentLikeRepository)
+    public CommentService(ICommentRepository commentRepository, IMapper mapper, ICommentLikeRepository commentLikeRepository, IPostRepository postRepository)
     {
         _commentRepository = commentRepository;
         _mapper = mapper;
         _commentLikeRepository = commentLikeRepository;
+        _postRepository = postRepository;
     }
     
     public GetCommentResponse GetCommentById(int commentId)
@@ -77,14 +81,26 @@ public class CommentService
         return _mapper.Map<PutCommentResponse>(updatedComment);
     }
 
-    public void DeleteComment(int commentId)
+    // Comments can be deleted by their authors or by the authors of the posts that they're on
+    public void DeleteComment(int commentId, DeleteCommentRequest deleteCommentRequest)
     {
-        var deletedComment = _commentRepository.DeleteComment(commentId);
-
-        if (deletedComment == null)
+        var userId = deleteCommentRequest.UserId;
+        
+        var commentInDatabase = _commentRepository.GetCommentById(commentId);
+        if (commentInDatabase == null)
         {
             throw new CommentNotFoundException("Comment with id " + commentId + " not found.");
         }
+        
+        var postInDatabase = _postRepository.GetPostById(commentInDatabase.PostId);
+        // If the userId is not the author of the comment and the userId is not the author of the post, throw an exception
+        if (commentInDatabase.AuthorId != userId && postInDatabase != null && postInDatabase.AuthorId != userId)
+        {
+            throw new CommentNotDeletedException("User with id " + userId +
+                                                 " is not the author of the comment with the id " + commentId);
+        }
+
+        _commentRepository.DeleteComment(commentId);
     }
 
     public PatchCommentResponse LikeComment(int commentId, LikeCommentRequest likeCommentRequest)

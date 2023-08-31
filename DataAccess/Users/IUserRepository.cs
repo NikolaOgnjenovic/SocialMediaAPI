@@ -16,5 +16,6 @@ public interface IUserRepository
     User? SetInactive(int userId);
 
     User? SetActive(int userId);
-    // TODO User? FollowUser(int followerId, int followingId);
+    User? FollowUser(int followerId, int followedId);
+    User? UnfollowUser(int followerId, int followedId);
 }

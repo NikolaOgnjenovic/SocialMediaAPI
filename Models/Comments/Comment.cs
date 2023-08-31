@@ -35,7 +35,7 @@ public class Comment
     /// </summary>
     public int LikeCount { get; set; }
     
-    public ICollection<CommentLike> UsersWhoLiked { get; set; }
+    public List<CommentLike> UsersWhoLiked { get; set; }
     
     public CommentStatus Status { get; set; }
 }

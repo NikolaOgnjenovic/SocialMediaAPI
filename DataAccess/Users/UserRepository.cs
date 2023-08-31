@@ -1,3 +1,4 @@
+using SocialConnectAPI.Exceptions;
 using SocialConnectAPI.Models;
 
 namespace SocialConnectAPI.DataAccess.Users;
@@ -96,6 +97,58 @@ public class UserRepository : IUserRepository
         }
 
         userInDatabase.Status = UserStatus.Active;
+        _databaseContext.SaveChanges();
+        return userInDatabase;
+    }
+
+    public User? FollowUser(int followerId, int followedId)
+    {
+        var userInDatabase = GetUserById(followerId);
+        if (userInDatabase == null)
+        {
+            return null;
+        }
+
+        var followingUserInDatabase = GetUserById(followedId);
+        if (followingUserInDatabase == null)
+        {
+            return null;
+        }
+        
+        if (userInDatabase.Following.Contains(followingUserInDatabase))
+        {
+            throw new UserFollowedException("User with id " + userInDatabase + " already follows user with id " +
+                                            followedId);
+        }
+        
+        userInDatabase.Following.Add(followingUserInDatabase);
+        followingUserInDatabase.Followers.Add(userInDatabase);
+        _databaseContext.SaveChanges();
+        return userInDatabase;
+    }
+    
+    public User? UnfollowUser(int followerId, int followedId)
+    {
+        var userInDatabase = GetUserById(followerId);
+        if (userInDatabase == null)
+        {
+            return null;
+        }
+
+        var followingUserInDatabase = GetUserById(followedId);
+        if (followingUserInDatabase == null)
+        {
+            return null;
+        }
+
+        if (!userInDatabase.Following.Contains(followingUserInDatabase))
+        {
+            throw new UserFollowedException("User with id " + userInDatabase + " does not follow user with id " +
+                                            followedId);
+        }
+        
+        userInDatabase.Following.Remove(followingUserInDatabase);
+        followingUserInDatabase.Followers.Remove(userInDatabase);
         _databaseContext.SaveChanges();
         return userInDatabase;
     }

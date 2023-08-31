@@ -11,9 +11,4 @@ public class PostCommentRequest
     /// The content of the comment.
     /// </summary>
     public string Content { get; set; }
-    
-    /// <summary>
-    /// The number of likes the comment has received.
-    /// </summary>
-    public int LikeCount { get; set; }
 }
