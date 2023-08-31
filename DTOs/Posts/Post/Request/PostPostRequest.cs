@@ -13,4 +13,9 @@ public class PostPostRequest
     /// The content of the post.
     /// </summary>
     public string Content { get; set; }
+    
+    /// <summary>
+    /// The list of tags associated with the post.
+    /// </summary>
+    public List<Tag> Tags { get; set; }
 }

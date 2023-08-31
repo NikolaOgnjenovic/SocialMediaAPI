@@ -528,6 +528,11 @@
             The content of the post.
             </summary>
         </member>
+        <member name="P:SocialConnectAPI.DTOs.Posts.Post.Request.PostPostRequest.Tags">
+            <summary>
+            The list of tags associated with the post.
+            </summary>
+        </member>
         <member name="P:SocialConnectAPI.DTOs.Posts.Post.Response.PostPostResponse.Id">
             <summary>
             The unique identifier of the post.
@@ -953,6 +958,18 @@
             <inheritdoc />
         </member>
         <member name="M:SocialConnectAPI.Migrations.Cleanup.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:SocialConnectAPI.Migrations.SimpleItems">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.SimpleItems.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.SimpleItems.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SocialConnectAPI.Migrations.SimpleItems.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:SocialConnectAPI.Models.Comment">
