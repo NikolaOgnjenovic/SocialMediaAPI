@@ -16,11 +16,12 @@
             <param name="commentService">The service for comment-related operations.</param>
             <param name="linkGenerator">The link generator for creating URIs.</param>
         </member>
-        <member name="M:SocialConnectAPI.Controllers.CommentController.GetCommentById(System.Int32)">
+        <member name="M:SocialConnectAPI.Controllers.CommentController.GetCommentById(System.Int32,System.Boolean)">
             <summary>
             Retrieves a comment by its ID.
             </summary>
             <param name="commentId">The ID of the comment to retrieve.</param>
+            <param name="isActive">A boolean indicating whether the comment has to be active or not (query parameter).</param>
             <returns>The retrieved comment.</returns>
         </member>
         <member name="M:SocialConnectAPI.Controllers.CommentController.GetActiveCommentById(System.Int32)">

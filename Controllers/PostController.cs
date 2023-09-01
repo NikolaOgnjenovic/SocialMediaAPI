@@ -44,37 +44,16 @@ public class PostController : ControllerBase
     /// Retrieves a post by its ID.
     /// </summary>
     /// <param name="postId">The ID of the post to retrieve.</param>
+    /// <param name="isActive">A boolean indicating whether the post has to be active or not (query parameter).</param>
     /// <returns>The retrieved post.</returns>
     [HttpGet("{postId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<GetPostResponse> GetPostById(int postId)
+    public ActionResult<GetPostResponse> GetPostById(int postId, [FromQuery] bool isActive)
     {
         try
         {
-            var post = _postService.GetPostById(postId);
-            post.Links = GeneratePostHateoasLinks(postId);
-            return Ok(post);
-        }
-        catch (PostNotFoundException)
-        {
-            return NotFound();
-        }
-    }
-    
-    /// <summary>
-    /// Retrieves an active post by its ID.
-    /// </summary>
-    /// <param name="postId">The ID of the active post to retrieve.</param>
-    /// <returns>The retrieved active post.</returns>
-    [HttpGet("{postId:int}/active")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<GetPostResponse> GetActivePostById(int postId)
-    {
-        try
-        {
-            var post = _postService.GetActivePostById(postId);
+            var post = isActive ? _postService.GetActivePostById(postId) : _postService.GetPostById(postId);
             post.Links = GeneratePostHateoasLinks(postId);
             return Ok(post);
         }
@@ -88,63 +67,31 @@ public class PostController : ControllerBase
     /// Retrieves posts associated with a user by their user ID.
     /// </summary>
     /// <param name="userId">The ID of the user whose posts to retrieve.</param>
+    /// <param name="isActive">A boolean indicating whether the posts have to be active or not (query parameter).</param>
     /// <returns>The list of posts associated with the user.</returns>
     [HttpGet("users/{userId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<List<GetPostResponse>> GetPostsByUserId(int userId)
+    public ActionResult<List<GetPostResponse>> GetPostsByUserId(int userId, [FromQuery] bool isActive)
     {
-        var posts = _postService.GetPostsByUserId(userId);
+        var posts = isActive ? _postService.GetActivePostsByUserId(userId) : _postService.GetPostsByUserId(userId);
         foreach (var post in posts)
         {
             post.Links = GeneratePostHateoasLinks(post.Id);
         }
         return Ok(posts);
     }
-    
-    /// <summary>
-    /// Retrieves active posts associated with a user by their user ID.
-    /// </summary>
-    /// <param name="userId">The ID of the user whose active posts to retrieve.</param>
-    /// <returns>The list of active posts associated with the user.</returns>
-    [HttpGet("users/{userId:int}/active")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<List<GetPostResponse>> GetActivePostsByUserId(int userId)
-    {
-        var posts = _postService.GetActivePostsByUserId(userId);
-        foreach (var post in posts)
-        {
-            post.Links = GeneratePostHateoasLinks(post.Id);
-        }
-        return Ok(posts);
-    }
-    
+
     /// <summary>
     /// Retrieves a list of posts that contain the given tag.
     /// </summary>
     /// <param name="tag">The tag that the posts need to contain.</param>
+    /// <param name="isActive">A boolean indicating whether the posts have to be active or not (query parameter).</param>
     /// <returns>The list of posts that contain the given tag.</returns>
     [HttpGet("tags/{tag:alpha}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<List<GetPostResponse>> GetPostsByTag(string tag)
+    public ActionResult<List<GetPostResponse>> GetPostsByTag(string tag, [FromQuery] bool isActive)
     {
-        var posts = _postService.GetPostsByTag(tag);
-        foreach (var post in posts)
-        {
-            post.Links = GeneratePostHateoasLinks(post.Id);
-        }
-        return Ok(posts);
-    }
-    
-    /// <summary>
-    /// Retrieves a list of active posts that contain the given tag.
-    /// </summary>
-    /// <param name="tag">The tag that the posts need to contain.</param>
-    /// <returns>The list of active posts that contain the given tag.</returns>
-    [HttpGet("tags/{tag:alpha}/active")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<List<GetPostResponse>> GetActivePostsByTag(string tag)
-    {
-        var posts = _postService.GetActivePostsByTag(tag);
+        var posts = isActive ? _postService.GetActivePostsByTag(tag) : _postService.GetPostsByTag(tag);
         foreach (var post in posts)
         {
             post.Links = GeneratePostHateoasLinks(post.Id);
@@ -313,20 +260,12 @@ public class PostController : ControllerBase
             new(
                 _linkGenerator.GetUriByAction(HttpContext, nameof(GetPostById),
                     values: new { postId }), ControllerName, "GET"),
-            new(
-                _linkGenerator.GetUriByAction(HttpContext, nameof(GetActivePostById),
-                    values: new { postId }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetPostsByUserId), values: new { userId = 1 }),
-                ControllerName, "GET"),
-            new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetActivePostsByUserId), values: new { userId = 1 }),
                 ControllerName, "GET"),
             new(
                 _linkGenerator.GetUriByAction(HttpContext, nameof(GetPostsByTag),
                     values: new { postId }), ControllerName, "GET"),
-            new(
-                _linkGenerator.GetUriByAction(HttpContext, nameof(GetActivePostsByTag),
-                    values: new { postId }), ControllerName, "GET"),
-                new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreatePost)), ControllerName, "POST"),
+            new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreatePost)), ControllerName, "POST"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(UpdatePost)), ControllerName, "PUT"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(LikePost)), ControllerName, "PATCH"),
                 new(_linkGenerator.GetUriByAction(HttpContext, nameof(ArchivePost)), ControllerName, "PATCH"),

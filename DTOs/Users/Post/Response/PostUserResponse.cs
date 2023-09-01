@@ -21,11 +21,11 @@ public class PostUserResponse : LinkCollection
     /// </summary>
     public string? LastName { get; set; }
 
-    public List<PostLike> PostLikes { get; set; }
+    public List<SimplePostLike> PostLikes { get; set; }
     /// <summary>
     /// The list of CommentLike objects that contain the relationship between a liked comment's id and the user's id.
     /// </summary>
-    public List<CommentLike> CommentLikes { get; set; }
+    public List<SimpleCommentLike> CommentLikes { get; set; }
     
     public List<SimpleUser> Followers { get; set; }
     public List<SimpleUser> Following { get; set; }

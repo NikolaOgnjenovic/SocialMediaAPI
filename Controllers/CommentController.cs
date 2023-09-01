@@ -41,37 +41,18 @@ public class CommentController : ControllerBase
     /// Retrieves a comment by its ID.
     /// </summary>
     /// <param name="commentId">The ID of the comment to retrieve.</param>
+    /// <param name="isActive">A boolean indicating whether the comment has to be active or not (query parameter).</param>
     /// <returns>The retrieved comment.</returns>
     [HttpGet("{commentId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<GetCommentResponse> GetCommentById(int commentId)
+    public ActionResult<GetCommentResponse> GetCommentById(int commentId, [FromQuery] bool isActive)
     {
         try
         {
-            var comment = _commentService.GetCommentById(commentId);
-            comment.Links = GenerateCommentHateoasLinks(commentId);
-            return Ok(comment);
-        }
-        catch (CommentNotFoundException)
-        {
-            return NotFound();
-        }
-    }
-
-    /// <summary>
-    /// Retrieves an active comment by its ID.
-    /// </summary>
-    /// <param name="commentId">The ID of the active comment to retrieve.</param>
-    /// <returns>The retrieved active comment.</returns>
-    [HttpGet("{commentId:int}/active")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<GetCommentResponse> GetActiveCommentById(int commentId)
-    {
-        try
-        {
-            var comment = _commentService.GetActiveCommentById(commentId);
+            var comment = isActive
+                ? _commentService.GetActiveCommentById(commentId)
+                : _commentService.GetCommentById(commentId);
             comment.Links = GenerateCommentHateoasLinks(commentId);
             return Ok(comment);
         }
@@ -85,30 +66,13 @@ public class CommentController : ControllerBase
     /// Retrieves comments associated with a user by their user ID.
     /// </summary>
     /// <param name="userId">The ID of the user whose comments to retrieve.</param>
+    /// <param name="isActive">A boolean indicating whether the comment has to be active or not (query parameter).</param>
     /// <returns>The list of comments associated with the user.</returns>
     [HttpGet("users/{userId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<List<GetCommentResponse>> GetCommentsByUserId(int userId)
+    public ActionResult<List<GetCommentResponse>> GetCommentsByUserId(int userId, [FromQuery] bool isActive)
     {
-        var comments = _commentService.GetCommentsByUserId(userId);
-        foreach (var comment in comments)
-        {
-            comment.Links = GenerateCommentHateoasLinks(comment.Id);
-        }
-
-        return Ok(comments);
-    }
-
-    /// <summary>
-    /// Retrieves active comments associated with a user by their user ID.
-    /// </summary>
-    /// <param name="userId">The ID of the user whose active comments to retrieve.</param>
-    /// <returns>The list of active comments associated with the user.</returns>
-    [HttpGet("users/{userId:int}/active")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<List<GetCommentResponse>> GetActiveCommentsByUserId(int userId)
-    {
-        var comments = _commentService.GetActiveCommentsByUserId(userId);
+        var comments = isActive ? _commentService.GetActiveCommentsByUserId(userId) : _commentService.GetCommentsByUserId(userId);
         foreach (var comment in comments)
         {
             comment.Links = GenerateCommentHateoasLinks(comment.Id);
@@ -159,6 +123,7 @@ public class CommentController : ControllerBase
     /// Deletes a comment by its ID.
     /// </summary>
     /// <param name="commentId">The ID of the comment to delete.</param>
+    /// <param name="deleteCommentRequest">The delete comment request that contains the ID of the user deleting the comment.</param>
     /// <returns>The result of the delete operation.</returns>
     [HttpDelete("{commentId:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -190,7 +155,7 @@ public class CommentController : ControllerBase
     /// Likes a comment by its ID.
     /// </summary>
     /// <param name="commentId">The ID of the comment to like.</param>
-    /// <param name="likeCommentRequest">The like post request that contains the ID of the user liking the comment.</param>
+    /// <param name="likeCommentRequest">The like comment request that contains the ID of the user liking the comment.</param>
     /// <returns>The liked comment.</returns>
     [HttpPatch("{commentId:int}/like")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -219,7 +184,7 @@ public class CommentController : ControllerBase
     /// Dislikes a comment by its ID.
     /// </summary>
     /// <param name="commentId">The ID of the comment to dislike.</param>
-    /// <param name="likeCommentRequest">The like post request that contains the ID of the user disliking the comment.</param>
+    /// <param name="likeCommentRequest">The like comment request that contains the ID of the user disliking the comment.</param>
     /// <returns>The disliked comment.</returns>
     [HttpPatch("{commentId:int}/dislike")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -262,14 +227,7 @@ public class CommentController : ControllerBase
             new(
                 _linkGenerator.GetUriByAction(HttpContext, nameof(GetCommentById),
                     values: new { commentId }), ControllerName, "GET"),
-            new(
-                _linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveCommentById),
-                    values: new { commentId }), ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(GetCommentsByUserId), values: new { userId = 1 }),
-                ControllerName, "GET"),
-            new(
-                _linkGenerator.GetUriByAction(HttpContext, nameof(GetActiveCommentsByUserId),
-                    values: new { userId = 1 }),
                 ControllerName, "GET"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(CreateComment)), ControllerName, "POST"),
             new(_linkGenerator.GetUriByAction(HttpContext, nameof(UpdateComment)), ControllerName, "PUT"),
